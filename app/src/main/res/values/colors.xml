@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Movie Details screen -->
+    <color name="colorMovieDetailsBackground">@color/colorDarkBlue</color>
+    <color name="colorMovieDetailsBackText">@color/colorGray</color>
+    <color name="colorMovieDetailsAllowedAgeBackground">@color/colorDarkBlue</color>
+    <color name="colorMovieDetailsAllowedAgeText">@color/colorLightOnDarkText</color>
+    <color name="colorMovieDetailsFilmName">@color/colorLightOnDarkText</color>
+    <color name="colorMovieDetailsFilmGenre">@color/colorPink</color>
+    <color name="colorMovieDetailsFilmRating">@color/colorGray</color>
+    <color name="colorMovieDetailsReviewsCounter">@color/colorGray</color>
+    <color name="colorMovieDetailsStorylineTitle">@color/colorLightOnDarkText</color>
+    <color name="colorMovieDetailsStorylineText">@color/white70</color>
+    <color name="colorMovieDetailsCastTitle">@color/colorLightOnDarkText</color>
+    <color name="colorMovieDetailsActorName">@color/white70</color>
+    <!-- Movie Details screen -->
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +23,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="white70">#B2FFFFFF</color>
+    <color name="colorDarkBlue">#191926</color>
+    <color name="colorGray">#6D6D80</color>
+    <color name="colorLightOnDarkText">#ECECEC</color>
+    <color name="colorPink">#FF3466</color>
+
 </resources>

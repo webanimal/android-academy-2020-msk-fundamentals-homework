@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Movie Details screen -->
+    <dimen name="movie_details_allowed_age_space">24dp</dimen>
+    <dimen name="movie_details_allowed_age_corners">1dp</dimen>
+    <dimen name="movie_details_actor_avatar_space">80dp</dimen>
+    <!-- Movie Details screen -->
+
+</resources>

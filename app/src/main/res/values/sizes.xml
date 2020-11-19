@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="movie_details_back_size">12sp</dimen>
+    <dimen name="movie_details_allowed_age_size">12sp</dimen>
+    <dimen name="movie_details_film_name_size">40sp</dimen>
+    <dimen name="movie_details_film_genre_size">20sp</dimen>
+    <dimen name="movie_details_reviews_size">20sp</dimen>
+    <dimen name="movie_details_storyline_title_size">20sp</dimen>
+    <dimen name="movie_details_storyline_text_size">14sp</dimen>
+    <dimen name="movie_details_cast_title_size">20sp</dimen>
+    <dimen name="movie_details_actor_name_size">12sp</dimen>
+
+</resources>
