@@ -1,3 +1,28 @@
 <resources>
+
     <string name="app_name">Fundamentals Homework</string>
+
+    <!-- Movie main screen -->
+    <string name="main_title">Movies app</string>
+    <string name="main_start_details_button_text">Start details</string>
+    <!-- Movie main screen -->
+
+    <!-- Movie Details screen -->
+    <string name="movie_details_title">Details</string>
+    <string name="movie_details_back_text">Back</string>
+    <string name="movie_details_allowed_age">13+</string>
+    <string name="movie_details_film_name_top_part">Avengers:</string>
+    <string name="movie_details_film_name_bottom_part">End Game</string>
+    <string name="movie_details_film_genre">Action, Adventure, Fantasy</string>
+    <string name="movie_details_reviews_counter">125 Reviews</string>
+    <string name="movie_details_storyline_title">Storyline</string>
+    <string name="movie_details_storyline_text">After the devastating events of Avengers: Infinity War, the universe is in ruins.
+        With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos\' actions and restore balance to the universe.</string>
+    <string name="movie_details_cast_title">Cast</string>
+    <string name="movie_details_actor_name_01">Robert\nDowney Jr.</string>
+    <string name="movie_details_actor_name_02">Chris\nEvans</string>
+    <string name="movie_details_actor_name_03">Mark\nRuffalo</string>
+    <string name="movie_details_actor_name_04">Chris\nHemsworth</string>
+    <!-- Movie Details screen -->
+
 </resources>
