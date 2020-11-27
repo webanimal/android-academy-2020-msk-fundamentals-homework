@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Movies List screen -->
+    <color name="colorMoviesListBackground">@color/colorDarkerBlue</color>
+    <color name="colorMoviesListCardBackground">@color/colorDarkBlue</color>
+    <color name="colorMoviesListCardStroke">@color/colorGrayStroke</color>
+    <color name="colorMoviesListHeaderText">@color/colorLightOnDarkText</color>
+    <color name="colorMoviesListAllowedAgeBackground">@color/colorDarkerBlue</color>
+    <color name="colorMoviesListAllowedAgeText">@color/colorLightOnDarkText</color>
+    <color name="colorMoviesListFilmGenre">@color/colorPink</color>
+    <color name="colorMoviesListFilmRating">@color/colorGrayText</color>
+    <color name="colorMoviesListReviewsCounter">@color/colorGrayText</color>
+    <color name="colorMoviesListFilmName">@color/colorLightOnDarkText</color>
+    <color name="colorMoviesListFilmTime">@color/colorGrayText</color>
+    <!-- Movies List screen -->
+
     <!-- Movie Details screen -->
-    <color name="colorMovieDetailsBackground">@color/colorDarkBlue</color>
-    <color name="colorMovieDetailsBackText">@color/colorGray</color>
-    <color name="colorMovieDetailsAllowedAgeBackground">@color/colorDarkBlue</color>
+    <color name="colorMovieDetailsBackground">@color/colorDarkerBlue</color>
+    <color name="colorMovieDetailsHeaderText">@color/colorGrayText</color>
+    <color name="colorMovieDetailsAllowedAgeBackground">@color/colorDarkerBlue</color>
     <color name="colorMovieDetailsAllowedAgeText">@color/colorLightOnDarkText</color>
     <color name="colorMovieDetailsFilmName">@color/colorLightOnDarkText</color>
     <color name="colorMovieDetailsFilmGenre">@color/colorPink</color>
-    <color name="colorMovieDetailsFilmRating">@color/colorGray</color>
-    <color name="colorMovieDetailsReviewsCounter">@color/colorGray</color>
+    <color name="colorMovieDetailsFilmRating">@color/colorGrayText</color>
+    <color name="colorMovieDetailsReviewsCounter">@color/colorGrayText</color>
     <color name="colorMovieDetailsStorylineTitle">@color/colorLightOnDarkText</color>
     <color name="colorMovieDetailsStorylineText">@color/white70</color>
     <color name="colorMovieDetailsCastTitle">@color/colorLightOnDarkText</color>
@@ -24,10 +38,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- Design colors -->
     <color name="white70">#B2FFFFFF</color>
-    <color name="colorDarkBlue">#191926</color>
-    <color name="colorGray">#6D6D80</color>
-    <color name="colorLightOnDarkText">#ECECEC</color>
+    <color name="colorDarkerBlue">#191926</color>
+    <color name="colorDarkBlue">#222232</color>
+    <color name="colorGrayBlue">#404056</color>
+    <color name="colorGrayStroke">#636375</color>
     <color name="colorPink">#FF3466</color>
+
+    <color name="colorGrayText">#6D6D80</color>
+    <color name="colorLightOnDarkText">#ECECEC</color>
 
 </resources>

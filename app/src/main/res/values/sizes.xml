@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Movies List screen -->
+    <dimen name="movies_list_allowed_age_size">12sp</dimen>
+    <dimen name="movies_list_header_text_size">14sp</dimen>
+    <dimen name="movies_list_film_genre_size">12sp</dimen>
+    <dimen name="movies_list_reviews_size">12sp</dimen>
+    <dimen name="movies_list_film_name_size">14sp</dimen>
+    <dimen name="movies_list_film_time_size">8sp</dimen>
+    <!-- Movies List screen -->
+
+    <!-- Movie Details screen -->
     <dimen name="movie_details_back_size">12sp</dimen>
     <dimen name="movie_details_allowed_age_size">12sp</dimen>
     <dimen name="movie_details_film_name_size">40sp</dimen>
@@ -10,5 +20,6 @@
     <dimen name="movie_details_storyline_text_size">14sp</dimen>
     <dimen name="movie_details_cast_title_size">20sp</dimen>
     <dimen name="movie_details_actor_name_size">12sp</dimen>
+    <!-- Movie Details screen -->
 
 </resources>
