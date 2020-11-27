@@ -5,28 +5,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorMovieDetailsBackground"
+    tools:context=".MainActivity"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorMovieDetailsBackground"
-        tools:context=".MovieDetailsActivity"
         >
 
         <ImageView
-            android:id="@+id/ivMovieDetailsHeader"
+            android:id="@+id/ivMovieDetailsHeaderImage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/movie_details_header_image_description"
             app:srcCompat="@drawable/img_movie_details_header"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:ignore="ContentDescription"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ic_mask"
+            app:layout_constraintTop_toTopOf="@+id/ivMovieDetailsHeaderImage"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMovieDetailsHeaderImage"
+            app:layout_constraintStart_toStartOf="@+id/ivMovieDetailsHeaderImage"
+            app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailsHeaderImage"
             />
 
         <LinearLayout
+            android:id="@+id/layMovieDetailsHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
@@ -39,22 +50,22 @@
             >
 
             <ImageView
-                android:id="@+id/ivMovieDetailsBackButton"
+                android:id="@+id/ivMovieDetailsHeaderIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/movie_details_back_button_description"
+                android:contentDescription="@string/movie_details_header_icon_description"
                 app:srcCompat="@drawable/ic_chevron_left"
                 />
 
             <TextView
-                android:id="@+id/tvMovieDetailsBackText"
+                android:id="@+id/tvMovieDetailsHeaderText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:gravity="center_vertical|start"
                 android:textSize="@dimen/movie_details_back_size"
-                android:textColor="@color/colorMovieDetailsBackText"
-                android:text="@string/movie_details_back_text"
+                android:textColor="@color/colorMovieDetailsHeaderText"
+                android:text="@string/movie_details_header_text"
                 />
 
         </LinearLayout>
@@ -83,7 +94,7 @@
             android:textSize="@dimen/movie_details_film_name_size"
             android:textColor="@color/colorMovieDetailsFilmName"
             android:text="@string/movie_details_film_name_top_part"
-            app:layout_constraintBottom_toBottomOf="@+id/ivMovieDetailsHeader"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMovieDetailsHeaderImage"
             app:layout_constraintStart_toStartOf="parent"
             />
 
@@ -97,7 +108,7 @@
             android:textSize="@dimen/movie_details_film_name_size"
             android:textColor="@color/colorMovieDetailsFilmName"
             android:text="@string/movie_details_film_name_bottom_part"
-            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailsHeader"
+            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailsHeaderImage"
             app:layout_constraintStart_toStartOf="parent"
             />
 

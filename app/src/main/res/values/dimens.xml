@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Movies List screen -->
+    <dimen name="movies_list_card_width">170dp</dimen>
+    <dimen name="movies_list_card_corners">8dp</dimen>
+    <dimen name="movies_list_top_margin">102dp</dimen>
+    <dimen name="movies_list_allowed_age_space">24dp</dimen>
+    <dimen name="movies_list_allowed_age_corners">5dp</dimen>
+    <dimen name="movies_list_love_icon_space">24dp</dimen>
+    <!-- Movies List screen -->
+
     <!-- Movie Details screen -->
     <dimen name="movie_details_allowed_age_space">24dp</dimen>
     <dimen name="movie_details_allowed_age_corners">1dp</dimen>
