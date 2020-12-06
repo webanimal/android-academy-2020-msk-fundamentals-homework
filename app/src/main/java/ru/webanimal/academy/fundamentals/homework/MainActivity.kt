@@ -6,7 +6,7 @@ import ru.webanimal.academy.fundamentals.homework.features.moviedetails.MovieDet
 import ru.webanimal.academy.fundamentals.homework.features.movies.MoviesListFragment
 
 class MainActivity : AppCompatActivity(),
-    MoviesListFragment.MoviesListItemClickListener,
+    MoviesListFragment.ListItemClickListener,
     MovieDetailsFragment.MovieDetailsBackClickListener
 {
 
@@ -19,8 +19,8 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onMovieSelected() {
-        routeToMovieDetails()
+    override fun onMovieSelected(movieId: Int) {
+        routeToMovieDetails(movieId)
     }
 
     override fun onMovieDeselected() {
@@ -34,9 +34,9 @@ class MainActivity : AppCompatActivity(),
             .commit()
     }
 
-    private fun routeToMovieDetails() {
+    private fun routeToMovieDetails(movieId: Int) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.container, MovieDetailsFragment.create(), MovieDetailsFragment::class.java.simpleName)
+            .add(R.id.container, MovieDetailsFragment.create(movieId), MovieDetailsFragment::class.java.simpleName)
             .addToBackStack("trans:${MovieDetailsFragment::class.java.simpleName}")
             .commit()
     }
