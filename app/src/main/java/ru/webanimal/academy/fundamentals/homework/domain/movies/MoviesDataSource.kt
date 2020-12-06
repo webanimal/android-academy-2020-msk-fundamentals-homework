@@ -4,21 +4,37 @@ import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.data.models.Actor
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 
-fun provideMovieDataSource(): MovieDataSource = MovieDataSourceImpl()
+fun provideMoviesDataSource(): MoviesDataSource = MoviesDataSourceImpl()
 
-interface MovieDataSource {
+interface MoviesDataSource {
     fun getMovies(): List<Movie>
     fun getMovieById(movieId: Int): Movie?
+    fun updateMovie(movie: Movie)
+    
     fun getActors(movieId: Int): List<Actor>?
 }
 
-private class MovieDataSourceImpl : MovieDataSource {
+private class MoviesDataSourceImpl : MoviesDataSource {
+    
+    private var cachedMovies: MutableList<Movie> = movies.toMutableList()
+    private var cachedActors: MutableList<Actor> = actors.toMutableList()
 
-    override fun getMovies(): List<Movie> = movies
+    override fun getMovies(): List<Movie> {
+        return ArrayList(cachedMovies)
+    }
 
-    override fun getMovieById(movieId: Int): Movie? = movies.find { movieId == it.id }
+    override fun getMovieById(movieId: Int): Movie? = cachedMovies.find { movieId == it.id }
 
-    override fun getActors(movieId: Int): List<Actor> = actors.filter { movieId == it.movieId }
+    override fun getActors(movieId: Int): List<Actor> = cachedActors.filter { movieId == it.movieId }
+    
+    override fun updateMovie(movie: Movie) {
+        cachedMovies.forEachIndexed { i: Int, it ->
+            if (it.id == movie.id) {
+                cachedMovies[i] = movie.copy()
+                return@forEachIndexed
+            }
+        }
+    }
 
     companion object {
         private val actors = listOf(

@@ -9,16 +9,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ru.webanimal.academy.fundamentals.homework.DataProvider
 import ru.webanimal.academy.fundamentals.homework.R
-import ru.webanimal.academy.fundamentals.homework.domain.movies.provideMovieDataSource
 import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
+import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 
 class MoviesListFragment : Fragment() {
 
-    private val dataSource = provideMovieDataSource()
 
     private var recycler: RecyclerView? = null
     private var listItemClickListener: ListItemClickListener? = null
+    private var dataProvider: DataProvider? = null
     private var columnsValue = PORTRAIT_LIST_COLUMNS_COUNT
 
     override fun onAttach(context: Context) {
@@ -26,6 +27,11 @@ class MoviesListFragment : Fragment() {
 
         if (context is ListItemClickListener) {
             listItemClickListener = context
+        }
+    
+        val appContext = context.applicationContext
+        if (appContext is DataProvider) {
+            dataProvider = appContext
         }
     }
 
@@ -56,25 +62,43 @@ class MoviesListFragment : Fragment() {
                 right = ADAPTER_DECORATION_SPACE,
                 bottom = ADAPTER_DECORATION_SPACE
             ))
-            adapter = MoviesAdapter(listItemClickListener)
+            adapter = MoviesAdapter(
+                    listItemClickListener,
+                    object : OnFavoriteClickListener {
+                        override fun onClick(movie: Movie) {
+                            // FIXME: move to IO thread
+                            dataProvider?.getDataSource()?.updateMovie(movie)
+                            updateAdapter()
+                        }
+                    }
+            )
         }
     }
 
     override fun onStart() {
         super.onStart()
 
-        (recycler?.adapter as? MoviesAdapter)?.updateAdapter(dataSource.getMovies())
+        updateAdapter()
     }
 
     override fun onDetach() {
         recycler = null
         listItemClickListener = null
+        dataProvider = null
 
         super.onDetach()
+    }
+    
+    private fun updateAdapter() {
+        (recycler?.adapter as? MoviesAdapter)?.updateAdapter(dataProvider?.getDataSource()?.getMovies())
     }
 
     interface ListItemClickListener {
         fun onMovieSelected(movieId: Int)
+    }
+    
+    interface OnFavoriteClickListener {
+        fun onClick(movie: Movie)
     }
 
     companion object {

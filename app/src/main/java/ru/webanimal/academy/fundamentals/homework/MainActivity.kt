@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(),
     private fun routeToMoviesList() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, MoviesListFragment.create(), MoviesListFragment::class.java.simpleName)
-            .addToBackStack("trans:${MoviesListFragment::class.java.simpleName}")
             .commit()
     }
 

@@ -12,7 +12,8 @@ import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 import ru.webanimal.academy.fundamentals.homework.extensions.getString
 
 class MoviesAdapter(
-        private val listItemClickListener: MoviesListFragment.ListItemClickListener?
+        private val listItemClickListener: MoviesListFragment.ListItemClickListener?,
+        private val favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
 ) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     private val diffCallback = MoviesDiffCallback()
@@ -20,7 +21,7 @@ class MoviesAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when {
-            moviesList.size > 0 -> MOVIE_VIEW_HOLDER
+            moviesList.isNotEmpty() -> MOVIE_VIEW_HOLDER
             else -> EMPTY_VIEW_HOLDER
         }
     }
@@ -38,7 +39,7 @@ class MoviesAdapter(
             is MoviesHolder -> {
                 val movie = moviesList[position]
                 holder.itemView.setOnClickListener { listItemClickListener?.onMovieSelected(movie.id) }
-                holder.onBind(movie)
+                holder.onBind(movie, favoriteClickListener)
             }
             is EmptyHolder -> { /* nothing to bind */ }
         }
@@ -48,7 +49,11 @@ class MoviesAdapter(
         return moviesList.size
     }
 
-    fun updateAdapter(newMovies: List<Movie>) {
+    fun updateAdapter(newMovies: List<Movie>?) {
+        if (newMovies.isNullOrEmpty()) {
+            return
+        }
+        
         DiffUtil.calculateDiff(
                 diffCallback.onNewList(oldList = moviesList, newList = newMovies)
         ).dispatchUpdatesTo(this)
@@ -73,14 +78,18 @@ class MoviesAdapter(
             itemView.findViewById(R.id.ivMoviesListRatingStar5)
         )
 
-        fun onBind(movie: Movie) {
+        fun onBind(
+                movie: Movie,
+                favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
+        ) {
+            
             nameView?.text = movie.name
             genreView?.text = movie.genre
             allowedAgeView?.text = movie.allowedAge
             reviewsCounterView?.text = movie.reviewsCounter.toString()
             durationView?.text = getString(R.string.movies_list_film_time, movie.duration.toString())
             headerImage?.setImageResource(movie.smallPosterId)
-
+    
             val favoriteResId = if (movie.isFavorite) {
                 R.drawable.ic_favorite_selected
 
@@ -88,6 +97,9 @@ class MoviesAdapter(
                 R.drawable.ic_favorite_deselected
             }
             favoriteIcon?.setImageResource(favoriteResId)
+            favoriteIcon?.setOnClickListener {
+                favoriteClickListener.onClick(movie.copy(isFavorite = !movie.isFavorite))
+            }
 
             var ratingResId: Int
             val ratingScore = movie.rating
