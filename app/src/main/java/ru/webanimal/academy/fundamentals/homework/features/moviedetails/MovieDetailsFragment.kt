@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
-import ru.webanimal.academy.fundamentals.homework.domain.movies.provideMovieDataSource
+import ru.webanimal.academy.fundamentals.homework.domain.movies.provideMoviesDataSource
 import ru.webanimal.academy.fundamentals.homework.extensions.visibleOrGone
 
 class MovieDetailsFragment : Fragment() {
 
-    private val dataSource = provideMovieDataSource()
+    private val dataSource = provideMoviesDataSource()
     private var actorsRecycler: RecyclerView? = null
     private var backClickListener: MovieDetailsBackClickListener? = null
     private var movieId = -1
