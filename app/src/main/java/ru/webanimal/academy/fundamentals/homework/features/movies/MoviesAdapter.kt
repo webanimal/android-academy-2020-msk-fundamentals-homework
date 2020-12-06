@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
+import ru.webanimal.academy.fundamentals.homework.extensions.getString
 
 class MoviesAdapter(
         private val listItemClickListener: MoviesListFragment.ListItemClickListener?
@@ -73,7 +74,7 @@ class MoviesAdapter(
             genreView?.text = movie.genre
             allowedAgeView?.text = movie.allowedAge
             reviewsCounterView?.text = movie.reviewsCounter.toString()
-            durationView?.text = movie.duration.toString()
+            durationView?.text = getString(R.string.movies_list_film_time, movie.duration.toString())
             headerImage?.setImageResource(movie.smallPosterId)
 
             val favoriteResId = if (movie.isFavorite) {
