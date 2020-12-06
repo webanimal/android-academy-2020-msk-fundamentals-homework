@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorMovieDetailsBackground"
+    >
+
+    <ImageView
+        android:id="@+id/ivMovieDetailsActorAvatar"
+        android:layout_width="@dimen/movie_details_actor_avatar_space"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/img_avengers_actor_robert_downey_jr"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tvMovieDetailsActorName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="@dimen/movie_details_actor_name_size"
+        android:textColor="@color/colorMovieDetailsActorName"
+        app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailsActorAvatar"
+        app:layout_constraintStart_toStartOf="@+id/ivMovieDetailsActorAvatar"
+        app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailsActorAvatar"
+        tools:text="@tools:sample/full_names"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

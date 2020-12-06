@@ -11,7 +11,7 @@
     <!-- Movies List screen -->
 
     <!-- Movie Details screen -->
-    <dimen name="movie_details_back_size">12sp</dimen>
+    <dimen name="movie_details_back_size">14sp</dimen>
     <dimen name="movie_details_allowed_age_size">12sp</dimen>
     <dimen name="movie_details_film_name_size">40sp</dimen>
     <dimen name="movie_details_film_genre_size">20sp</dimen>

@@ -9,6 +9,7 @@ fun provideMovieDataSource(): MovieDataSource = MovieDataSourceImpl()
 interface MovieDataSource {
     fun getMovies(): List<Movie>
     fun getMovieById(movieId: Int): Movie?
+    fun getActors(movieId: Int): List<Actor>?
 }
 
 private class MovieDataSourceImpl : MovieDataSource {
@@ -17,8 +18,10 @@ private class MovieDataSourceImpl : MovieDataSource {
 
     override fun getMovieById(movieId: Int): Movie? = movies.find { movieId == it.id }
 
+    override fun getActors(movieId: Int): List<Actor> = actors.filter { movieId == it.movieId }
+
     companion object {
-        private val actors = listOf<Actor>(
+        private val actors = listOf(
                 Actor(0, "Robert Downey Jr.", R.drawable.img_avengers_actor_robert_downey_jr),
                 Actor(0,"Chris Evans", R.drawable.img_avengers_actor_chris_evans),
                 Actor(0,"Mark Ruffalo", R.drawable.img_avengers_actor_mark_ruffalo),
@@ -37,7 +40,7 @@ private class MovieDataSourceImpl : MovieDataSource {
                 Actor(3, "Pedro Pascal", R.drawable.img_ww84_actor_pedro_pascal)
         )
 
-        private val movies = listOf<Movie>(
+        private val movies = listOf(
                 Movie(
                         id = 0,
                         nameTwoLine = "Avengers:\nEnd Game",

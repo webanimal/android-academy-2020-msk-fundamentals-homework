@@ -232,129 +232,21 @@
             app:layout_constraintStart_toStartOf="parent"
             />
 
-        <ImageView
-            android:id="@+id/ivMovieDetailsActorAvatar01"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMovieDetailsActors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:contentDescription="@string/movie_details_actor_avatar_01"
-            app:srcCompat="@drawable/img_avengers_actor_robert_downey_jr"
-            app:layout_constraintDimensionRatio="1,1"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovieDetailsCastTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ivMovieDetailsActorAvatar02"
-            />
-
-        <ImageView
-            android:id="@+id/ivMovieDetailsActorAvatar02"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:contentDescription="@string/movie_details_actor_avatar_02"
-            app:srcCompat="@drawable/img_avengers_actor_chris_evans"
-            app:layout_constraintDimensionRatio="1,1"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovieDetailsCastTitle"
-            app:layout_constraintStart_toEndOf="@id/ivMovieDetailsActorAvatar01"
-            app:layout_constraintEnd_toStartOf="@+id/ivMovieDetailsActorAvatar03"
-            />
-
-        <ImageView
-            android:id="@+id/ivMovieDetailsActorAvatar03"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:contentDescription="@string/movie_details_actor_avatar_03"
-            app:srcCompat="@drawable/img_avengers_actor_mark_ruffalo"
-            app:layout_constraintDimensionRatio="1,1"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovieDetailsCastTitle"
-            app:layout_constraintStart_toEndOf="@id/ivMovieDetailsActorAvatar02"
-            app:layout_constraintEnd_toStartOf="@+id/ivMovieDetailsActorAvatar04"
-            />
-
-        <ImageView
-            android:id="@+id/ivMovieDetailsActorAvatar04"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:contentDescription="@string/movie_details_actor_avatar_04"
-            app:srcCompat="@drawable/img_avengers_actor_chris_hemsworth"
-            app:layout_constraintDimensionRatio="1,1"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/tvMovieDetailsCastTitle"
-            app:layout_constraintStart_toEndOf="@id/ivMovieDetailsActorAvatar03"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
-        <TextView
-            android:id="@+id/tvMovieDetailsActorName01"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="top|start"
-            android:textStyle="bold"
-            android:textSize="@dimen/movie_details_actor_name_size"
-            android:textColor="@color/colorMovieDetailsActorName"
-            android:text="@string/movie_details_actor_name_01"
-            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailsActorAvatar01"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ivMovieDetailsActorAvatar01"
-            app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailsActorAvatar01"
-            />
-
-        <TextView
-            android:id="@+id/tvMovieDetailsActorName02"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="top|start"
-            android:textStyle="bold"
-            android:textSize="@dimen/movie_details_actor_name_size"
-            android:textColor="@color/colorMovieDetailsActorName"
-            android:text="@string/movie_details_actor_name_02"
-            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailsActorAvatar02"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ivMovieDetailsActorAvatar02"
-            app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailsActorAvatar02"
-            />
-
-        <TextView
-            android:id="@+id/tvMovieDetailsActorName03"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="top|start"
-            android:textStyle="bold"
-            android:textSize="@dimen/movie_details_actor_name_size"
-            android:textColor="@color/colorMovieDetailsActorName"
-            android:text="@string/movie_details_actor_name_03"
-            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailsActorAvatar03"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ivMovieDetailsActorAvatar03"
-            app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailsActorAvatar03"
-            />
-
-        <TextView
-            android:id="@+id/tvMovieDetailsActorName04"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="top|start"
-            android:textStyle="bold"
-            android:textSize="@dimen/movie_details_actor_name_size"
-            android:textColor="@color/colorMovieDetailsActorName"
-            android:text="@string/movie_details_actor_name_04"
-            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailsActorAvatar04"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ivMovieDetailsActorAvatar04"
-            app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailsActorAvatar04"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            tools:listitem="@layout/item_movie_details_actors_list"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.domain.movies.provideMovieDataSource
+import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
 
 class MoviesListFragment : Fragment() {
 
@@ -49,11 +50,11 @@ class MoviesListFragment : Fragment() {
         recycler = view.findViewById<RecyclerView>(R.id.rvMovies).apply {
             layoutManager = GridLayoutManager(view.context, columnsValue)
             addItemDecoration(ItemOffsetDecorator(
-                    context.applicationContext,
-                    left = ADAPTER_DECORATION_SPACE,
-                    top = ADAPTER_DECORATION_SPACE,
-                    right = ADAPTER_DECORATION_SPACE,
-                    bottom = ADAPTER_DECORATION_SPACE
+                context.applicationContext,
+                left = ADAPTER_DECORATION_SPACE,
+                top = ADAPTER_DECORATION_SPACE,
+                right = ADAPTER_DECORATION_SPACE,
+                bottom = ADAPTER_DECORATION_SPACE
             ))
             adapter = MoviesAdapter(listItemClickListener)
         }

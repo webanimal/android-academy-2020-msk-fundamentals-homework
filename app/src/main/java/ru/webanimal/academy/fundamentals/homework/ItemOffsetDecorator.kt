@@ -1,4 +1,4 @@
-package ru.webanimal.academy.fundamentals.homework.features.movies
+package ru.webanimal.academy.fundamentals.homework
 
 import android.content.Context
 import android.graphics.Rect
