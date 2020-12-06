@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
@@ -14,7 +15,8 @@ class MoviesAdapter(
         private val listItemClickListener: MoviesListFragment.ListItemClickListener?
 ) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
-    private var moviesList = mutableListOf<Movie>()
+    private val diffCallback = MoviesDiffCallback()
+    private var moviesList: List<Movie> = mutableListOf()
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -47,8 +49,10 @@ class MoviesAdapter(
     }
 
     fun updateAdapter(newMovies: List<Movie>) {
-        moviesList = newMovies.toMutableList()
-        notifyDataSetChanged()
+        DiffUtil.calculateDiff(
+                diffCallback.onNewList(oldList = moviesList, newList = newMovies)
+        ).dispatchUpdatesTo(this)
+        moviesList = newMovies
     }
 
     abstract class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
