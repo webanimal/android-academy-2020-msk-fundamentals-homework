@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
 import ru.webanimal.academy.fundamentals.homework.R
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie
+import ru.webanimal.academy.fundamentals.homework.data.models.Movie_legacy
 import ru.webanimal.academy.fundamentals.homework.domain.movies.provideMoviesDataSource
 import ru.webanimal.academy.fundamentals.homework.extensions.visibleOrGone
 
@@ -68,8 +68,8 @@ class MovieDetailsFragment : Fragment() {
         super.onDetach()
     }
 
-    private fun setupViews(parent: View, movie: Movie?) {
-        movie?.let {
+    private fun setupViews(parent: View, movieLegacy: Movie_legacy?) {
+        movieLegacy?.let {
             parent.findViewById<TextView>(R.id.tvMovieDetailsFilmName)?.text = it.nameTwoLine
             parent.findViewById<TextView>(R.id.tvMovieDetailsFilmGenre)?.text = it.genre
             parent.findViewById<TextView>(R.id.tvMovieDetailsStorylineText)?.text = it.storyline
@@ -97,7 +97,7 @@ class MovieDetailsFragment : Fragment() {
                     bottom = ADAPTER_DECORATION_SPACE
             ))
             adapter = ActorsAdapter()
-            visibleOrGone(setVisible = movie != null)
+            visibleOrGone(setVisible = movieLegacy != null)
         }
     }
 

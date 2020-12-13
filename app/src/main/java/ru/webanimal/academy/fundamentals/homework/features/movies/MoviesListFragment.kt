@@ -12,10 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.DataProvider
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie
+import ru.webanimal.academy.fundamentals.homework.data.models.Movie_legacy
 
 class MoviesListFragment : Fragment() {
-
 
     private var recycler: RecyclerView? = null
     private var listItemClickListener: ListItemClickListener? = null
@@ -65,9 +64,9 @@ class MoviesListFragment : Fragment() {
             adapter = MoviesAdapter(
                     listItemClickListener,
                     object : OnFavoriteClickListener {
-                        override fun onClick(movie: Movie) {
+                        override fun onClick(movieLegacy: Movie_legacy) {
                             // FIXME: move to IO thread
-                            dataProvider?.getDataSource()?.updateMovie(movie)
+                            dataProvider?.getDataSource()?.updateMovie(movieLegacy)
                             updateAdapter()
                         }
                     }
@@ -98,7 +97,7 @@ class MoviesListFragment : Fragment() {
     }
     
     interface OnFavoriteClickListener {
-        fun onClick(movie: Movie)
+        fun onClick(movieLegacy: Movie_legacy)
     }
 
     companion object {

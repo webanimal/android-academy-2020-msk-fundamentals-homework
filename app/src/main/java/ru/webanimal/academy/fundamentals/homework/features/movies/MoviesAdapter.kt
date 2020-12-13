@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.R
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie
+import ru.webanimal.academy.fundamentals.homework.data.models.Movie_legacy
 import ru.webanimal.academy.fundamentals.homework.extensions.getString
 
 class MoviesAdapter(
@@ -17,7 +17,7 @@ class MoviesAdapter(
 ) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     private val diffCallback = MoviesDiffCallback()
-    private var moviesList: List<Movie> = mutableListOf()
+    private var moviesList: List<Movie_legacy> = mutableListOf()
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -49,15 +49,15 @@ class MoviesAdapter(
         return moviesList.size
     }
 
-    fun updateAdapter(newMovies: List<Movie>?) {
-        if (newMovies.isNullOrEmpty()) {
+    fun updateAdapter(newMovieLegacies: List<Movie_legacy>?) {
+        if (newMovieLegacies.isNullOrEmpty()) {
             return
         }
         
         DiffUtil.calculateDiff(
-                diffCallback.onNewList(oldList = moviesList, newList = newMovies)
+                diffCallback.onNewList(oldList = moviesList, newList = newMovieLegacies)
         ).dispatchUpdatesTo(this)
-        moviesList = newMovies
+        moviesList = newMovieLegacies
     }
 
     abstract class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -79,18 +79,18 @@ class MoviesAdapter(
         )
 
         fun onBind(
-                movie: Movie,
-                favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
+            movieLegacy: Movie_legacy,
+            favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
         ) {
             
-            nameView?.text = movie.name
-            genreView?.text = movie.genre
-            allowedAgeView?.text = movie.allowedAge
-            reviewsCounterView?.text = movie.reviewsCounter.toString()
-            durationView?.text = getString(R.string.movies_list_film_time, movie.duration.toString())
-            headerImage?.setImageResource(movie.smallPosterId)
+            nameView?.text = movieLegacy.name
+            genreView?.text = movieLegacy.genre
+            allowedAgeView?.text = movieLegacy.allowedAge
+            reviewsCounterView?.text = movieLegacy.reviewsCounter.toString()
+            durationView?.text = getString(R.string.movies_list_film_time, movieLegacy.duration.toString())
+            headerImage?.setImageResource(movieLegacy.smallPosterId)
     
-            val favoriteResId = if (movie.isFavorite) {
+            val favoriteResId = if (movieLegacy.isFavorite) {
                 R.drawable.ic_favorite_selected
 
             } else {
@@ -98,11 +98,11 @@ class MoviesAdapter(
             }
             favoriteIcon?.setImageResource(favoriteResId)
             favoriteIcon?.setOnClickListener {
-                favoriteClickListener.onClick(movie.copy(isFavorite = !movie.isFavorite))
+                favoriteClickListener.onClick(movieLegacy.copy(isFavorite = !movieLegacy.isFavorite))
             }
 
             var ratingResId: Int
-            val ratingScore = movie.rating
+            val ratingScore = movieLegacy.rating
             for (i in 0 until MAX_RATING_VALUE) {
                 ratingResId = if (i < ratingScore) {
                     R.drawable.ic_star_selected
