@@ -13,8 +13,8 @@ import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 import ru.webanimal.academy.fundamentals.homework.extensions.getString
 
 class MoviesAdapter(
-        private val listItemClickListener: MoviesListFragment.ListItemClickListener?,
-        private val favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
+    private val listItemClickListener: MoviesListFragment.ListItemClickListener?,
+    private val favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
 ) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     private val diffCallback = MoviesDiffCallback()
@@ -80,8 +80,8 @@ class MoviesAdapter(
         )
 
         fun onBind(
-				movie: Movie,
-				favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
+            movie: Movie,
+            favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
         ) {
             
             nameView.text = movie.title

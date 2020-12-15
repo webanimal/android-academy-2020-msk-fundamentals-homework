@@ -7,8 +7,7 @@ import ru.webanimal.academy.fundamentals.homework.features.movies.MoviesListFrag
 
 class MainActivity : AppCompatActivity(),
     MoviesListFragment.ListItemClickListener,
-    MovieDetailsFragment.MovieDetailsBackClickListener
-{
+    MovieDetailsFragment.MovieDetailsBackClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,13 +28,21 @@ class MainActivity : AppCompatActivity(),
 
     private fun routeToMoviesList() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.container, MoviesListFragment.create(), MoviesListFragment::class.java.simpleName)
+            .replace(
+                R.id.container,
+                MoviesListFragment.create(),
+                MoviesListFragment::class.java.simpleName
+            )
             .commit()
     }
 
     private fun routeToMovieDetails(movieId: Int) {
         supportFragmentManager.beginTransaction()
-            .add(R.id.container, MovieDetailsFragment.create(movieId), MovieDetailsFragment::class.java.simpleName)
+            .add(
+                R.id.container,
+                MovieDetailsFragment.create(movieId),
+                MovieDetailsFragment::class.java.simpleName
+            )
             .addToBackStack("trans:${MovieDetailsFragment::class.java.simpleName}")
             .commit()
     }

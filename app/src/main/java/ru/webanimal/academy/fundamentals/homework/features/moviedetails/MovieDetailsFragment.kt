@@ -21,7 +21,7 @@ import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 import ru.webanimal.academy.fundamentals.homework.extensions.visibleOrGone
 
 class MovieDetailsFragment : Fragment() {
-    
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         val isActive = coroutineScope.isActive
         Log.e(TAG, "ExceptionHandler [Scope active:$isActive, throwable:$throwable]")
@@ -31,7 +31,7 @@ class MovieDetailsFragment : Fragment() {
         coroutineScope = createCoroutineScope()
     }
     private var coroutineScope = createCoroutineScope()
-    
+
     private var actorsRecycler: RecyclerView? = null
     private var filmNameView: TextView? = null
     private var genreView: TextView? = null
@@ -41,7 +41,7 @@ class MovieDetailsFragment : Fragment() {
     private var castsView: TextView? = null
     private var posterImage: ImageView? = null
     private var ratings: List<ImageView> = emptyList()
-    
+
     private var backClickListener: MovieDetailsBackClickListener? = null
     private var dataProvider: DataProvider? = null
     private var movie: Movie? = null
@@ -53,7 +53,7 @@ class MovieDetailsFragment : Fragment() {
         if (context is MovieDetailsBackClickListener) {
             backClickListener = context
         }
-    
+
         val appContext = context.applicationContext
         if (appContext is DataProvider) {
             dataProvider = appContext
@@ -73,10 +73,10 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(parent, savedInstanceState)
 
         movieId = extractMovieId(args = arguments, savedState = savedInstanceState)
-        
+
         setupViews(parent)
         setupListeners(parent)
-        
+
         updateData(movieId)
     }
 
@@ -91,10 +91,10 @@ class MovieDetailsFragment : Fragment() {
 
         super.onDetach()
     }
-    
+
     private fun updateData(movieId: Int) {
         if (movieId <= 0) return
-        
+
         coroutineScope.launch(coroutineExceptionHandler) {
             movie = dataProvider?.dataSource()?.getMovieByIdAsync(movieId)?.apply {
                 bindViews(this)
@@ -102,7 +102,7 @@ class MovieDetailsFragment : Fragment() {
             }
         }
     }
-    
+
     private fun updateActors(actors: List<Actor>) {
         val isNotEmpty = actors.isNotEmpty()
         if (isNotEmpty) {
@@ -110,20 +110,20 @@ class MovieDetailsFragment : Fragment() {
         }
         updateActorsVisibility(setVisible = isNotEmpty)
     }
-    
+
     private fun bindViews(movie: Movie) {
         filmNameView?.text = movie.title
         genreView?.text = movie.genres
         storylineView?.text = movie.overview
         allowedAgeView?.text = movie.allowedAge
         reviewsCounterView?.text = movie.reviewsCounter.toString()
-        
+
         posterImage?.let { posterView ->
             Picasso.get().load(movie.posterDetails)
                 .placeholder(R.drawable.img_coming_soon_placeholder)
                 .into(posterView)
         }
-        
+
         for (i in 0 until movie.rating) {
             ratings[i].setImageResource(R.drawable.ic_star_selected)
         }
@@ -138,26 +138,28 @@ class MovieDetailsFragment : Fragment() {
         castsView = parent.findViewById(R.id.tvMovieDetailsCastTitle)
         posterImage = parent.findViewById(R.id.ivMovieDetailsHeaderImage)
         ratings = listOf(
-                parent.findViewById(R.id.ivMovieDetailsRatingStar1),
-                parent.findViewById(R.id.ivMovieDetailsRatingStar2),
-                parent.findViewById(R.id.ivMovieDetailsRatingStar3),
-                parent.findViewById(R.id.ivMovieDetailsRatingStar4),
-                parent.findViewById(R.id.ivMovieDetailsRatingStar5)
+            parent.findViewById(R.id.ivMovieDetailsRatingStar1),
+            parent.findViewById(R.id.ivMovieDetailsRatingStar2),
+            parent.findViewById(R.id.ivMovieDetailsRatingStar3),
+            parent.findViewById(R.id.ivMovieDetailsRatingStar4),
+            parent.findViewById(R.id.ivMovieDetailsRatingStar5)
         )
 
         actorsRecycler = parent.findViewById<RecyclerView>(R.id.rvMovieDetailsActors)?.apply {
-            addItemDecoration(ItemOffsetDecorator(
+            addItemDecoration(
+                ItemOffsetDecorator(
                     context.applicationContext,
                     left = ADAPTER_DECORATION_SPACE,
                     top = ADAPTER_DECORATION_SPACE,
                     right = ADAPTER_DECORATION_SPACE,
                     bottom = ADAPTER_DECORATION_SPACE
-            ))
+                )
+            )
             adapter = ActorsAdapter()
         }
         updateActorsVisibility(setVisible = movie?.actors?.isNotEmpty() ?: false)
     }
-    
+
     private fun clearViews() {
         actorsRecycler = null
         filmNameView = null
@@ -188,7 +190,7 @@ class MovieDetailsFragment : Fragment() {
 
         return id
     }
-    
+
     private fun createCoroutineScope() = CoroutineScope(Job() + Dispatchers.Main)
 
     interface MovieDetailsBackClickListener {
@@ -197,7 +199,7 @@ class MovieDetailsFragment : Fragment() {
 
     companion object {
         private val TAG = MovieDetailsFragment::class.java.simpleName
-        
+
         fun create(movieId: Int) = MovieDetailsFragment().apply {
             arguments = Bundle().apply { putInt(KEY_MOVIE_ID, movieId) }
         }

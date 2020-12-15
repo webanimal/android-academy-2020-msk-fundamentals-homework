@@ -15,11 +15,13 @@ class ActorsAdapter : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
     private var actorsList = mutableListOf<Actor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
-        return ActorsHolder(LayoutInflater.from(parent.context).inflate(
+        return ActorsHolder(
+            LayoutInflater.from(parent.context).inflate(
                 R.layout.item_movie_details_actors_list,
                 parent,
                 false
-        ))
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ActorsViewHolder, position: Int) {

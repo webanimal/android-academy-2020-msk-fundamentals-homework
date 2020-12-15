@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
 import ru.webanimal.academy.fundamentals.homework.DataProvider
-import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
+import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 
 class MoviesListFragment : Fragment() {
@@ -76,12 +76,12 @@ class MoviesListFragment : Fragment() {
                 bottom = ADAPTER_DECORATION_SPACE
             ))
             adapter = MoviesAdapter(
-                    listItemClickListener,
-                    object : OnFavoriteClickListener {
-                        override fun onClick(movie: Movie) {
-                            updateFavorites(movie)
-                        }
+                listItemClickListener,
+                object : OnFavoriteClickListener {
+                    override fun onClick(movie: Movie) {
+                        updateFavorites(movie)
                     }
+                }
             )
         }
     
