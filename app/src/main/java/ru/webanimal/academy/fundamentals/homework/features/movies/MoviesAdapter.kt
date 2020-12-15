@@ -13,6 +13,7 @@ import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 import ru.webanimal.academy.fundamentals.homework.extensions.getString
 
 class MoviesAdapter(
+    private val actualListItemWidth: Int,
     private val listItemClickListener: MoviesListFragment.ListItemClickListener?,
     private val favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
 ) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
@@ -29,9 +30,33 @@ class MoviesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         return when (viewType) {
-            MOVIE_VIEW_HOLDER -> MoviesHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_movies_list, parent, false))
-            EMPTY_VIEW_HOLDER -> EmptyHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_movies_empty, parent, false))
-            else -> EmptyHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_movies_empty, parent, false))
+            MOVIE_VIEW_HOLDER -> {
+                val view = LayoutInflater.from(parent.context).inflate(
+                    R.layout.item_movies_list,
+                    parent,
+                    false
+                )
+                val root = view.findViewById<ViewGroup>(R.id.layMoviesListItem)
+                root.layoutParams.width = actualListItemWidth
+                view.findViewById<ImageView>(R.id.ivMoviesListHeaderImage)?.clipToOutline = true
+                view.requestLayout()
+
+                MoviesHolder(view)
+            }
+            EMPTY_VIEW_HOLDER -> EmptyHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.item_movies_empty,
+                    parent,
+                    false
+                )
+            )
+            else -> EmptyHolder(
+                LayoutInflater.from(parent.context).inflate(
+                    R.layout.item_movies_empty,
+                    parent,
+                    false
+                )
+            )
         }
     }
 
@@ -42,7 +67,8 @@ class MoviesAdapter(
                 holder.itemView.setOnClickListener { listItemClickListener?.onMovieSelected(movie.id) }
                 holder.onBind(movie, favoriteClickListener)
             }
-            is EmptyHolder -> { /* nothing to bind */ }
+            is EmptyHolder -> { /* nothing to bind */
+            }
         }
     }
 
@@ -56,7 +82,7 @@ class MoviesAdapter(
         }
         
         DiffUtil.calculateDiff(
-                diffCallback.onNewList(oldList = moviesList, newList = newMovies)
+            diffCallback.onNewList(oldList = moviesList, newList = newMovies)
         ).dispatchUpdatesTo(this)
         moviesList = newMovies
     }

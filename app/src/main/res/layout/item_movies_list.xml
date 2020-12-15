@@ -12,7 +12,7 @@
     app:layout_constraintStart_toStartOf="parent"
     >
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivMoviesListHeaderImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -21,6 +21,7 @@
         android:layout_marginEnd="1dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/movies_list_header_image_description"
+        app:shapeAppearanceOverlay="@style/ShapeableImageView"
         app:srcCompat="@drawable/img_movies_item_header_avengers"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

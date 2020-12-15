@@ -8,3 +8,8 @@ fun Context.dpToPx(dp: Float) = TypedValue.applyDimension(
     dp,
     this.resources.displayMetrics
 )
+
+fun Context.pxToDp(px: Float): Int {
+    val metrics = this.resources.displayMetrics
+    return (px / metrics.density).toInt()
+}
