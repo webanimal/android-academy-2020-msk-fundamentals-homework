@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ru.webanimal.academy.fundamentals.homework.R
-import ru.webanimal.academy.fundamentals.homework.data.models.Actor_legacy
+import ru.webanimal.academy.fundamentals.homework.data.models.Actor
 
 class ActorsAdapter : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 
-    private var actorsList = mutableListOf<Actor_legacy>()
+    private var actorsList = mutableListOf<Actor>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorsViewHolder {
         return ActorsHolder(LayoutInflater.from(parent.context).inflate(
@@ -29,8 +30,8 @@ class ActorsAdapter : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
         return actorsList.size
     }
 
-    fun updateAdapter(newActorLegacies: List<Actor_legacy>) {
-        actorsList = newActorLegacies.toMutableList()
+    fun updateAdapter(newActors: List<Actor>) {
+        actorsList = newActors.toMutableList()
         notifyDataSetChanged()
     }
 
@@ -39,9 +40,11 @@ class ActorsAdapter : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
         private val nameView: TextView? = itemView.findViewById(R.id.tvMovieDetailsActorName)
         private val avatarImage: ImageView? = itemView.findViewById(R.id.ivMovieDetailsActorAvatar)
 
-        fun onBind(actorLegacy: Actor_legacy) {
-            nameView?.text = actorLegacy.name
-            avatarImage?.setImageResource(actorLegacy.imageId)
+        fun onBind(actor: Actor) {
+            nameView?.text = actor.name
+            Picasso.get().load(actor.image)
+                .placeholder(R.drawable.img_coming_soon_placeholder)
+                .into(avatarImage)
         }
     }
 }

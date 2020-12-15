@@ -1,7 +1,7 @@
 package ru.webanimal.academy.fundamentals.homework.data.models
 
 data class Actor(
-    val id: Int,
+    val movieId: Int,
     val name: String,
-    val picture: String
+    val image: String
 )

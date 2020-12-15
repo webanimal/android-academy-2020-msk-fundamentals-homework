@@ -3,23 +3,37 @@ package ru.webanimal.academy.fundamentals.homework.features.movies
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.*
 import ru.webanimal.academy.fundamentals.homework.DataProvider
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie_legacy
+import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 
 class MoviesListFragment : Fragment() {
-
+    
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        val isActive = coroutineScope.isActive
+        Log.e(TAG, "ExceptionHandler [Scope active:$isActive, throwable:$throwable]")
+        context?.let {
+            Toast.makeText(it, "Load movies error", Toast.LENGTH_LONG).show()
+        }
+        coroutineScope = createCoroutineScope()
+    }
+    private var coroutineScope = createCoroutineScope()
+    
     private var recycler: RecyclerView? = null
     private var listItemClickListener: ListItemClickListener? = null
     private var dataProvider: DataProvider? = null
     private var columnsValue = PORTRAIT_LIST_COLUMNS_COUNT
+    private var movies: List<Movie> = arrayListOf()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -64,20 +78,14 @@ class MoviesListFragment : Fragment() {
             adapter = MoviesAdapter(
                     listItemClickListener,
                     object : OnFavoriteClickListener {
-                        override fun onClick(movieLegacy: Movie_legacy) {
-                            // FIXME: move to IO thread
-                            dataProvider?.getDataSource()?.updateMovie(movieLegacy)
-                            updateAdapter()
+                        override fun onClick(movie: Movie) {
+                            updateFavorites(movie)
                         }
                     }
             )
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        updateAdapter()
+    
+        updateData()
     }
 
     override fun onDetach() {
@@ -88,19 +96,38 @@ class MoviesListFragment : Fragment() {
         super.onDetach()
     }
     
-    private fun updateAdapter() {
-        (recycler?.adapter as? MoviesAdapter)?.updateAdapter(dataProvider?.getDataSource()?.getMovies())
+    private fun updateData() {
+        coroutineScope.launch(coroutineExceptionHandler) {
+            movies = dataProvider?.dataSource()?.getMoviesAsync(true) ?: emptyList()
+            updateAdapter(movies)
+        }
     }
+    
+    private fun updateFavorites(movie: Movie) {
+        coroutineScope.launch(coroutineExceptionHandler) {
+            dataProvider?.dataSource()?.updateMovieAsync(movie)
+            movies = dataProvider?.dataSource()?.getMoviesAsync() ?: emptyList()
+            updateAdapter(movies)
+        }
+    }
+    
+    private fun updateAdapter(movies: List<Movie>) {
+        (recycler?.adapter as? MoviesAdapter)?.updateAdapter(movies)
+    }
+    
+    private fun createCoroutineScope() = CoroutineScope(Job() + Dispatchers.Main)
 
     interface ListItemClickListener {
         fun onMovieSelected(movieId: Int)
     }
     
     interface OnFavoriteClickListener {
-        fun onClick(movieLegacy: Movie_legacy)
+        fun onClick(movie: Movie)
     }
 
     companion object {
+        private val TAG = MoviesListFragment::class.java.simpleName
+        
         fun create() = MoviesListFragment()
     }
 }

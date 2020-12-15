@@ -1,12 +1,12 @@
 package ru.webanimal.academy.fundamentals.homework.features.movies
 
 import androidx.recyclerview.widget.DiffUtil
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie_legacy
+import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 
 class MoviesDiffCallback : DiffUtil.Callback() {
 	
-	private var oldList: List<Movie_legacy> = mutableListOf()
-	private var newList: List<Movie_legacy> = mutableListOf()
+	private var oldList: List<Movie> = mutableListOf()
+	private var newList: List<Movie> = mutableListOf()
 	
 	override fun getOldListSize(): Int = oldList.size
 	
@@ -16,7 +16,7 @@ class MoviesDiffCallback : DiffUtil.Callback() {
 		val oldItem = oldList[oldItemPosition]
 		val newItem = newList[newItemPosition]
 		return oldItem.id == newItem.id
-				&& oldItem.name == newItem.name
+				&& oldItem.title == newItem.title
 				&& oldItem.isFavorite == newItem.isFavorite
 	}
 	
@@ -24,7 +24,7 @@ class MoviesDiffCallback : DiffUtil.Callback() {
 		return oldList[oldItemPosition] == newList[newItemPosition]
 	}
 	
-	fun onNewList(oldList: List<Movie_legacy>, newList: List<Movie_legacy>): MoviesDiffCallback {
+	fun onNewList(oldList: List<Movie>, newList: List<Movie>): MoviesDiffCallback {
 		this.oldList = oldList
 		this.newList = newList
 		

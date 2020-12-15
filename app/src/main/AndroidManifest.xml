@@ -4,9 +4,12 @@
     package="ru.webanimal.academy.fundamentals.homework"
     >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:theme="@style/Theme.FundamentalsHomework"
-        android:name=".App"
+        android:name=".MyApp"
         android:allowBackup="true"
         android:supportsRtl="true"
         android:label="@string/app_name"
