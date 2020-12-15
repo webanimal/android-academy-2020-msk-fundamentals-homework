@@ -15,6 +15,7 @@ import ru.webanimal.academy.fundamentals.homework.BaseFragment
 import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
+import ru.webanimal.academy.fundamentals.homework.extensions.pxToDp
 
 class MoviesListFragment : BaseFragment() {
     
@@ -31,6 +32,8 @@ class MoviesListFragment : BaseFragment() {
     private var recycler: RecyclerView? = null
     private var listItemClickListener: ListItemClickListener? = null
     private var columnsValue = PORTRAIT_LIST_COLUMNS_COUNT
+    private var actualListItemWidth = 0
+    private var listMargins = 32
     private var movies: List<Movie> = arrayListOf()
 
     override fun onAttach(context: Context) {
@@ -53,31 +56,9 @@ class MoviesListFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        columnsValue = when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> LANDSCAPE_LIST_COLUMNS_COUNT
-            Configuration.ORIENTATION_PORTRAIT -> PORTRAIT_LIST_COLUMNS_COUNT
-            else -> PORTRAIT_LIST_COLUMNS_COUNT
-        }
+        calculateListLayoutParams()
+        setupViews(view)
 
-        recycler = view.findViewById<RecyclerView>(R.id.rvMovies).apply {
-            layoutManager = GridLayoutManager(view.context, columnsValue)
-            addItemDecoration(ItemOffsetDecorator(
-                context.applicationContext,
-                left = ADAPTER_DECORATION_SPACE,
-                top = ADAPTER_DECORATION_SPACE,
-                right = ADAPTER_DECORATION_SPACE,
-                bottom = ADAPTER_DECORATION_SPACE
-            ))
-            adapter = MoviesAdapter(
-                listItemClickListener,
-                object : OnFavoriteClickListener {
-                    override fun onClick(movie: Movie) {
-                        updateFavorites(movie)
-                    }
-                }
-            )
-        }
-    
         updateData()
     }
 
@@ -107,6 +88,54 @@ class MoviesListFragment : BaseFragment() {
     
     private fun updateAdapter(movies: List<Movie>) {
         (recycler?.adapter as? MoviesAdapter)?.updateAdapter(movies)
+    }
+
+    private fun calculateListLayoutParams() {
+        val screenWidth = resources.configuration.screenWidthDp
+        val cardWidth = resources.getDimension(R.dimen.movies_list_card_width)
+        val cardWidthPx = context?.pxToDp(cardWidth) ?: 170
+        val outerMargins = listMargins
+        val decorMargins = (ADAPTER_DECORATION_SPACE * 2).toInt()
+        val availableSpace = screenWidth - outerMargins - cardWidthPx
+        columnsValue = 1 + (availableSpace / (cardWidthPx + decorMargins))
+        val additionalSpace = screenWidth - outerMargins - cardWidthPx * columnsValue - decorMargins * (columnsValue - 1)
+        actualListItemWidth = cardWidth.toInt() + additionalSpace / columnsValue
+        /*
+        Log.d("TEST::", """
+                screenWidth:$screenWidth
+                cardWidth:$cardWidth
+                cardWidthPx:$cardWidthPx
+                outerMargins:$outerMargins
+                decorMargins:$decorMargins
+                availableSpace:$availableSpace
+                columnsValue:$columnsValue
+                additionalSpace:$additionalSpace
+                actualListItemWidth:$actualListItemWidth
+            """.trimIndent()
+        )
+        */
+    }
+
+    private fun setupViews(view: View) {
+        recycler = view.findViewById<RecyclerView>(R.id.rvMovies).apply {
+            layoutManager = GridLayoutManager(view.context, columnsValue)
+            addItemDecoration(ItemOffsetDecorator(
+                context.applicationContext,
+                left = ADAPTER_DECORATION_SPACE,
+                top = ADAPTER_DECORATION_SPACE,
+                right = ADAPTER_DECORATION_SPACE,
+                bottom = ADAPTER_DECORATION_SPACE
+            ))
+            adapter = MoviesAdapter(
+                actualListItemWidth,
+                listItemClickListener,
+                object : OnFavoriteClickListener {
+                    override fun onClick(movie: Movie) {
+                        updateFavorites(movie)
+                    }
+                }
+            )
+        }
     }
     
     private fun createCoroutineScope() = CoroutineScope(Job() + Dispatchers.Main)
