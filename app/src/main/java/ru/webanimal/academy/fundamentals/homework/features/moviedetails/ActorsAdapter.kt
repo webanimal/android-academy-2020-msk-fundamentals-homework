@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.data.models.Actor
 
@@ -41,7 +42,9 @@ class ActorsAdapter : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 
         fun onBind(actor: Actor) {
             nameView?.text = actor.name
-            avatarImage?.setImageResource(actor.imageId)
+            Picasso.get().load(actor.image)
+                .placeholder(R.drawable.img_coming_soon_placeholder)
+                .into(avatarImage)
         }
     }
 }

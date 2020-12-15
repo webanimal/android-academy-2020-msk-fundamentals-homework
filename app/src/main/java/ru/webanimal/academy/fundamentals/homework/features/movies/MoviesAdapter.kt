@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 import ru.webanimal.academy.fundamentals.homework.extensions.getString
@@ -63,14 +64,14 @@ class MoviesAdapter(
     abstract class MoviesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     private class EmptyHolder(itemView: View) : MoviesViewHolder(itemView)
     private class MoviesHolder(itemView: View) : MoviesViewHolder(itemView) {
-        private val nameView: TextView? = itemView.findViewById(R.id.tvMoviesListFilmName)
-        private val genreView: TextView? = itemView.findViewById(R.id.tvMoviesListFilmGenre)
-        private val allowedAgeView: TextView? = itemView.findViewById(R.id.tvMoviesListAllowedAge)
-        private val reviewsCounterView: TextView? = itemView.findViewById(R.id.tvMoviesListReviewsCounter)
-        private val durationView: TextView? = itemView.findViewById(R.id.tvMoviesListFilmDuration)
-        private val headerImage: ImageView? = itemView.findViewById(R.id.ivMoviesListHeaderImage)
-        private val favoriteIcon: ImageView? = itemView.findViewById(R.id.ivMoviesListIsFavorite)
-        private val ratingImages = listOf<ImageView?>(
+        private val nameView: TextView = itemView.findViewById(R.id.tvMoviesListFilmName)
+        private val genreView: TextView = itemView.findViewById(R.id.tvMoviesListFilmGenre)
+        private val allowedAgeView: TextView = itemView.findViewById(R.id.tvMoviesListAllowedAge)
+        private val reviewsCounterView: TextView = itemView.findViewById(R.id.tvMoviesListReviewsCounter)
+        private val durationView: TextView = itemView.findViewById(R.id.tvMoviesListFilmDuration)
+        private val headerImage: ImageView = itemView.findViewById(R.id.ivMoviesListHeaderImage)
+        private val favoriteIcon: ImageView = itemView.findViewById(R.id.ivMoviesListIsFavorite)
+        private val ratingImages = listOf<ImageView>(
             itemView.findViewById(R.id.ivMoviesListRatingStar1),
             itemView.findViewById(R.id.ivMoviesListRatingStar2),
             itemView.findViewById(R.id.ivMoviesListRatingStar3),
@@ -79,16 +80,19 @@ class MoviesAdapter(
         )
 
         fun onBind(
-                movie: Movie,
-                favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
+				movie: Movie,
+				favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
         ) {
             
-            nameView?.text = movie.name
-            genreView?.text = movie.genre
-            allowedAgeView?.text = movie.allowedAge
-            reviewsCounterView?.text = movie.reviewsCounter.toString()
-            durationView?.text = getString(R.string.movies_list_film_time, movie.duration.toString())
-            headerImage?.setImageResource(movie.smallPosterId)
+            nameView.text = movie.title
+            genreView.text = movie.genres
+            allowedAgeView.text = movie.allowedAge
+            reviewsCounterView.text = movie.reviewsCounter.toString()
+            durationView.text = getString(R.string.movies_list_film_time, movie.duration.toString())
+
+            Picasso.get().load(movie.posterList)
+                .placeholder(R.drawable.img_coming_soon_placeholder)
+                .into(headerImage)
     
             val favoriteResId = if (movie.isFavorite) {
                 R.drawable.ic_favorite_selected
@@ -96,8 +100,8 @@ class MoviesAdapter(
             } else {
                 R.drawable.ic_favorite_deselected
             }
-            favoriteIcon?.setImageResource(favoriteResId)
-            favoriteIcon?.setOnClickListener {
+            favoriteIcon.setImageResource(favoriteResId)
+            favoriteIcon.setOnClickListener {
                 favoriteClickListener.onClick(movie.copy(isFavorite = !movie.isFavorite))
             }
 
@@ -110,7 +114,7 @@ class MoviesAdapter(
                 } else {
                     R.drawable.ic_star_deselected
                 }
-                ratingImages[i]?.setImageResource(ratingResId)
+                ratingImages[i].setImageResource(ratingResId)
             }
         }
     }

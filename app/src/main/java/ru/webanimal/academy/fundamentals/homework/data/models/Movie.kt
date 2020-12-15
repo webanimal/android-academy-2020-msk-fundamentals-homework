@@ -2,16 +2,15 @@ package ru.webanimal.academy.fundamentals.homework.data.models
 
 data class Movie(
         var id: Int,
-        var nameTwoLine: String,
-        var name: String,
-        var genre: String,
-        var storyline: String,
+        var title: String,
+        val genres: String,
+        var overview: String,
         var allowedAge: String,
-        var bigPosterId: Int,
-        var smallPosterId: Int,
+        val posterList: String,
+        val posterDetails: String,
         var rating: Int,
         var reviewsCounter: Int,
         var duration: Int,
-        var isFavorite: Boolean,
+        var isFavorite: Boolean = false,
         var actors: List<Actor>
 )

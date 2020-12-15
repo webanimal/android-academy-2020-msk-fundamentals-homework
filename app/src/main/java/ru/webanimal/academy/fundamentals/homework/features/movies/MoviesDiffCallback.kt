@@ -16,7 +16,7 @@ class MoviesDiffCallback : DiffUtil.Callback() {
 		val oldItem = oldList[oldItemPosition]
 		val newItem = newList[newItemPosition]
 		return oldItem.id == newItem.id
-				&& oldItem.name == newItem.name
+				&& oldItem.title == newItem.title
 				&& oldItem.isFavorite == newItem.isFavorite
 	}
 	
