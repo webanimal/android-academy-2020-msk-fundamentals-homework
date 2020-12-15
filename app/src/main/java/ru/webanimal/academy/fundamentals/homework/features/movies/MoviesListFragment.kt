@@ -8,16 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.*
-import ru.webanimal.academy.fundamentals.homework.DataProvider
+import ru.webanimal.academy.fundamentals.homework.BaseFragment
 import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 
-class MoviesListFragment : Fragment() {
+class MoviesListFragment : BaseFragment() {
     
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         val isActive = coroutineScope.isActive
@@ -31,7 +30,6 @@ class MoviesListFragment : Fragment() {
     
     private var recycler: RecyclerView? = null
     private var listItemClickListener: ListItemClickListener? = null
-    private var dataProvider: DataProvider? = null
     private var columnsValue = PORTRAIT_LIST_COLUMNS_COUNT
     private var movies: List<Movie> = arrayListOf()
 
@@ -40,11 +38,6 @@ class MoviesListFragment : Fragment() {
 
         if (context is ListItemClickListener) {
             listItemClickListener = context
-        }
-    
-        val appContext = context.applicationContext
-        if (appContext is DataProvider) {
-            dataProvider = appContext
         }
     }
 
@@ -89,9 +82,10 @@ class MoviesListFragment : Fragment() {
     }
 
     override fun onDetach() {
+        coroutineScope.cancel("It's time")
+
         recycler = null
         listItemClickListener = null
-        dataProvider = null
 
         super.onDetach()
     }
