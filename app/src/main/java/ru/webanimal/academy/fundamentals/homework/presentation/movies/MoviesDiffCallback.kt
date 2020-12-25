@@ -1,4 +1,4 @@
-package ru.webanimal.academy.fundamentals.homework.features.movies
+package ru.webanimal.academy.fundamentals.homework.presentation.movies
 
 import androidx.recyclerview.widget.DiffUtil
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie

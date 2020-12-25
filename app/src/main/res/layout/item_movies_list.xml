@@ -22,7 +22,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="@string/movies_list_header_image_description"
         app:shapeAppearanceOverlay="@style/ShapeableImageView"
-        app:srcCompat="@drawable/img_movies_item_header_avengers"
+        app:srcCompat="@drawable/img_coming_soon_placeholder"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

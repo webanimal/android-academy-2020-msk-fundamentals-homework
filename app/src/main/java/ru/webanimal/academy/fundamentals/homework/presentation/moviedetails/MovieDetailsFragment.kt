@@ -1,36 +1,26 @@
-package ru.webanimal.academy.fundamentals.homework.features.moviedetails
+package ru.webanimal.academy.fundamentals.homework.presentation.moviedetails
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.*
-import ru.webanimal.academy.fundamentals.homework.DataProvider
+import ru.webanimal.academy.fundamentals.homework.BaseFragment
 import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
 import ru.webanimal.academy.fundamentals.homework.R
+import ru.webanimal.academy.fundamentals.homework.appComponent
 import ru.webanimal.academy.fundamentals.homework.data.models.Actor
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 import ru.webanimal.academy.fundamentals.homework.extensions.visibleOrGone
 
-class MovieDetailsFragment : Fragment() {
+class MovieDetailsFragment : BaseFragment() {
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        val isActive = coroutineScope.isActive
-        Log.e(TAG, "ExceptionHandler [Scope active:$isActive, throwable:$throwable]")
-        context?.let {
-            Toast.makeText(it, "Load movie error", Toast.LENGTH_LONG).show()
-        }
-        coroutineScope = createCoroutineScope()
-    }
-    private var coroutineScope = createCoroutineScope()
+    private lateinit var viewModel: MovieDetailsViewModel
 
     private var actorsRecycler: RecyclerView? = null
     private var filmNameView: TextView? = null
@@ -43,8 +33,6 @@ class MovieDetailsFragment : Fragment() {
     private var ratings: List<ImageView> = emptyList()
 
     private var backClickListener: MovieDetailsBackClickListener? = null
-    private var dataProvider: DataProvider? = null
-    private var movie: Movie? = null
     private var movieId = -1
 
     override fun onAttach(context: Context) {
@@ -52,11 +40,6 @@ class MovieDetailsFragment : Fragment() {
 
         if (context is MovieDetailsBackClickListener) {
             backClickListener = context
-        }
-
-        val appContext = context.applicationContext
-        if (appContext is DataProvider) {
-            dataProvider = appContext
         }
     }
 
@@ -76,8 +59,7 @@ class MovieDetailsFragment : Fragment() {
 
         setupViews(parent)
         setupListeners(parent)
-
-        updateData(movieId)
+        setupViewModel()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -87,20 +69,8 @@ class MovieDetailsFragment : Fragment() {
     override fun onDetach() {
         clearViews()
         backClickListener = null
-        dataProvider = null
 
         super.onDetach()
-    }
-
-    private fun updateData(movieId: Int) {
-        if (movieId <= 0) return
-
-        coroutineScope.launch(coroutineExceptionHandler) {
-            movie = dataProvider?.dataSource()?.getMovieByIdAsync(movieId)?.apply {
-                bindViews(this)
-                updateActors(this.actors)
-            }
-        }
     }
 
     private fun updateActors(actors: List<Actor>) {
@@ -157,7 +127,7 @@ class MovieDetailsFragment : Fragment() {
             )
             adapter = ActorsAdapter()
         }
-        updateActorsVisibility(setVisible = movie?.actors?.isNotEmpty() ?: false)
+        updateActorsVisibility(setVisible = false)
     }
 
     private fun clearViews() {
@@ -182,6 +152,18 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(this, appComponent().viewModelFactory())
+            .get(MovieDetailsViewModel::class.java)
+        viewModel.movie.observe(this.viewLifecycleOwner) {
+            bindViews(it)
+            updateActors(it.actors)
+        }
+        if (movieId > 0) {
+            viewModel.onViewCreated(movieId)
+        }
+    }
+
     private fun extractMovieId(args: Bundle?, savedState: Bundle?): Int {
         var id = args?.getInt(KEY_MOVIE_ID, -1) ?: -1
         if (id < 0) {
@@ -190,8 +172,6 @@ class MovieDetailsFragment : Fragment() {
 
         return id
     }
-
-    private fun createCoroutineScope() = CoroutineScope(Job() + Dispatchers.Main)
 
     interface MovieDetailsBackClickListener {
         fun onMovieDeselected()

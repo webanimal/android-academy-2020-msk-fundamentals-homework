@@ -1,25 +1,24 @@
 package ru.webanimal.academy.fundamentals.homework
 
 import android.app.Application
+import android.content.Context
+import androidx.fragment.app.Fragment
 import ru.webanimal.academy.fundamentals.homework.data.JsonLoader
-import ru.webanimal.academy.fundamentals.homework.domain.movies.MoviesDataSource
 import ru.webanimal.academy.fundamentals.homework.domain.movies.MoviesDataSourceImpl
 
-interface DataProvider {
-    fun dataSource(): MoviesDataSource
-}
+class MyApp : Application(), AppComponent {
 
-class MyApp : Application(), DataProvider {
-
-    private lateinit var moviesDataSource: MoviesDataSource
-    private lateinit var moviesLoader: JsonLoader
+    private lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate() {
         super.onCreate()
 
-        moviesLoader = JsonLoader(this)
-        moviesDataSource = MoviesDataSourceImpl(moviesLoader)
+        viewModelFactory = ViewModelFactory(MoviesDataSourceImpl(JsonLoader(this)))
     }
 
-    override fun dataSource(): MoviesDataSource = moviesDataSource
+    override fun viewModelFactory(): ViewModelFactory = viewModelFactory
 }
+
+fun Context.appComponent() = (applicationContext as MyApp)
+
+fun Fragment.appComponent() = requireContext().appComponent()

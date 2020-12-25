@@ -13,7 +13,7 @@
         android:layout_width="@dimen/movie_details_actor_avatar_space"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
-        app:srcCompat="@drawable/img_avengers_actor_robert_downey_jr"
+        app:srcCompat="@drawable/img_actor_placeholder"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

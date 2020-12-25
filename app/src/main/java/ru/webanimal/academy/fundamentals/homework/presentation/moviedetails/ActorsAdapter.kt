@@ -1,4 +1,4 @@
-package ru.webanimal.academy.fundamentals.homework.features.moviedetails
+package ru.webanimal.academy.fundamentals.homework.presentation.moviedetails
 
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +45,7 @@ class ActorsAdapter : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
         fun onBind(actor: Actor) {
             nameView?.text = actor.name
             Picasso.get().load(actor.image)
-                .placeholder(R.drawable.img_coming_soon_placeholder)
+                .placeholder(R.drawable.img_actor_placeholder)
                 .into(avatarImage)
         }
     }

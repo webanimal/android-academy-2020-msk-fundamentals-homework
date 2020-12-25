@@ -1,4 +1,4 @@
-package ru.webanimal.academy.fundamentals.homework.features.movies
+package ru.webanimal.academy.fundamentals.homework.presentation.movies
 
 import android.view.LayoutInflater
 import android.view.View

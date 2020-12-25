@@ -1,39 +1,26 @@
-package ru.webanimal.academy.fundamentals.homework.features.movies
+package ru.webanimal.academy.fundamentals.homework.presentation.movies
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.*
-import ru.webanimal.academy.fundamentals.homework.BaseFragment
-import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
-import ru.webanimal.academy.fundamentals.homework.R
+import ru.webanimal.academy.fundamentals.homework.*
 import ru.webanimal.academy.fundamentals.homework.data.models.Movie
 import ru.webanimal.academy.fundamentals.homework.extensions.pxToDp
 
 class MoviesListFragment : BaseFragment() {
-    
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        val isActive = coroutineScope.isActive
-        Log.e(TAG, "ExceptionHandler [Scope active:$isActive, throwable:$throwable]")
-        context?.let {
-            Toast.makeText(it, "Load movies error", Toast.LENGTH_LONG).show()
-        }
-        coroutineScope = createCoroutineScope()
-    }
-    private var coroutineScope = createCoroutineScope()
-    
+
+    private lateinit var viewModel: MoviesListViewModel
+
     private var recycler: RecyclerView? = null
     private var listItemClickListener: ListItemClickListener? = null
     private var columnsValue = 0
     private var actualListItemWidth = 0
     private var listMargins = 32
-    private var movies: List<Movie> = arrayListOf()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,32 +44,14 @@ class MoviesListFragment : BaseFragment() {
 
         calculateListLayoutParams()
         setupViews(view)
-
-        updateData()
+        setupViewModel()
     }
 
     override fun onDetach() {
-        coroutineScope.cancel("It's time")
-
         recycler = null
         listItemClickListener = null
 
         super.onDetach()
-    }
-    
-    private fun updateData() {
-        coroutineScope.launch(coroutineExceptionHandler) {
-            movies = dataProvider?.dataSource()?.getMoviesAsync(true) ?: emptyList()
-            updateAdapter(movies)
-        }
-    }
-    
-    private fun updateFavorites(movie: Movie) {
-        coroutineScope.launch(coroutineExceptionHandler) {
-            dataProvider?.dataSource()?.updateMovieAsync(movie)
-            movies = dataProvider?.dataSource()?.getMoviesAsync() ?: emptyList()
-            updateAdapter(movies)
-        }
     }
     
     private fun updateAdapter(movies: List<Movie>) {
@@ -99,20 +68,6 @@ class MoviesListFragment : BaseFragment() {
         columnsValue = 1 + (availableSpace / (cardWidthPx + decorMargins))
         val additionalSpace = screenWidth - outerMargins - cardWidthPx * columnsValue - decorMargins * (columnsValue - 1)
         actualListItemWidth = cardWidth.toInt() + additionalSpace / columnsValue
-        /*
-        Log.d("TEST::", """
-                screenWidth:$screenWidth
-                cardWidth:$cardWidth
-                cardWidthPx:$cardWidthPx
-                outerMargins:$outerMargins
-                decorMargins:$decorMargins
-                availableSpace:$availableSpace
-                columnsValue:$columnsValue
-                additionalSpace:$additionalSpace
-                actualListItemWidth:$actualListItemWidth
-            """.trimIndent()
-        )
-        */
     }
 
     private fun setupViews(view: View) {
@@ -130,15 +85,22 @@ class MoviesListFragment : BaseFragment() {
                 listItemClickListener,
                 object : OnFavoriteClickListener {
                     override fun onClick(movie: Movie) {
-                        updateFavorites(movie)
+                        viewModel.onFavoriteClick(movie)
                     }
                 }
             )
         }
     }
-    
-    private fun createCoroutineScope() = CoroutineScope(Job() + Dispatchers.Main)
 
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(this, appComponent().viewModelFactory())
+            .get(MoviesListViewModel::class.java)
+        viewModel.movies.observe(this.viewLifecycleOwner) {
+            updateAdapter(it)
+        }
+        viewModel.onViewCreated()
+    }
+    
     interface ListItemClickListener {
         fun onMovieSelected(movieId: Int)
     }

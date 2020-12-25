@@ -20,7 +20,6 @@
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:contentDescription="@string/movie_details_header_image_description"
-            app:srcCompat="@drawable/img_movie_details_header_avengers"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

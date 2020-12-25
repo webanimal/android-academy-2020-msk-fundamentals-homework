@@ -2,8 +2,8 @@ package ru.webanimal.academy.fundamentals.homework
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import ru.webanimal.academy.fundamentals.homework.features.moviedetails.MovieDetailsFragment
-import ru.webanimal.academy.fundamentals.homework.features.movies.MoviesListFragment
+import ru.webanimal.academy.fundamentals.homework.presentation.moviedetails.MovieDetailsFragment
+import ru.webanimal.academy.fundamentals.homework.presentation.movies.MoviesListFragment
 
 class MainActivity : AppCompatActivity(),
     MoviesListFragment.ListItemClickListener,
