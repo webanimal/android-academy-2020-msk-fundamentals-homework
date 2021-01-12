@@ -47,11 +47,10 @@ class MoviesListFragment : BaseFragment() {
         setupViewModel()
     }
 
-    override fun onDetach() {
-        recycler = null
-        listItemClickListener = null
+    override fun onDestroyView() {
+        clearViews()
 
-        super.onDetach()
+        super.onDestroyView()
     }
     
     private fun updateAdapter(movies: List<Movie>) {
@@ -90,6 +89,12 @@ class MoviesListFragment : BaseFragment() {
                 }
             )
         }
+    }
+
+    private fun clearViews() {
+        recycler = null
+
+        listItemClickListener = null
     }
 
     private fun setupViewModel() {

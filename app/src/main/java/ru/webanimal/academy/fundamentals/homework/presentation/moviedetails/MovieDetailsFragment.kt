@@ -52,13 +52,13 @@ class MovieDetailsFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
     }
 
-    override fun onViewCreated(parent: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(parent, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         movieId = extractMovieId(args = arguments, savedState = savedInstanceState)
 
-        setupViews(parent)
-        setupListeners(parent)
+        setupViews(view)
+        setupListeners(view)
         setupViewModel()
     }
 
@@ -66,11 +66,10 @@ class MovieDetailsFragment : BaseFragment() {
         outState.putInt(KEY_MOVIE_ID, movieId)
     }
 
-    override fun onDetach() {
+    override fun onDestroyView() {
         clearViews()
-        backClickListener = null
 
-        super.onDetach()
+        super.onDestroyView()
     }
 
     private fun updateActors(actors: List<Actor>) {
@@ -81,7 +80,7 @@ class MovieDetailsFragment : BaseFragment() {
         updateActorsVisibility(setVisible = isNotEmpty)
     }
 
-    private fun bindViews(movie: Movie) {
+    private fun bindMovie(movie: Movie) {
         filmNameView?.text = movie.title
         genreView?.text = movie.genres
         storylineView?.text = movie.overview
@@ -139,6 +138,8 @@ class MovieDetailsFragment : BaseFragment() {
         reviewsCounterView = null
         posterImage = null
         ratings = emptyList()
+
+        backClickListener = null
     }
 
     private fun updateActorsVisibility(setVisible: Boolean) {
@@ -156,7 +157,7 @@ class MovieDetailsFragment : BaseFragment() {
         viewModel = ViewModelProvider(this, appComponent().viewModelFactory())
             .get(MovieDetailsViewModel::class.java)
         viewModel.movie.observe(this.viewLifecycleOwner) {
-            bindViews(it)
+            bindMovie(it)
             updateActors(it.actors)
         }
         if (movieId > 0) {
