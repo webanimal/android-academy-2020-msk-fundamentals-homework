@@ -1,4 +1,4 @@
-package ru.webanimal.academy.fundamentals.homework.data.models
+package ru.webanimal.academy.fundamentals.homework.domain.movies.models
 
 data class Actor(
     val movieId: Int,

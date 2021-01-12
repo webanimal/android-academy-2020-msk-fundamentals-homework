@@ -1,6 +1,6 @@
-package ru.webanimal.academy.fundamentals.homework.data.models
+package ru.webanimal.academy.fundamentals.homework.data.storage.entities
 
-data class Movie(
+data class MovieEntity(
         var id: Int = 0,
         var title: String = "",
         val genres: String = "",
@@ -12,5 +12,5 @@ data class Movie(
         var reviewsCounter: Int = 0,
         var duration: Int = 0,
         var isFavorite: Boolean = false,
-        var actors: List<Actor> = emptyList()
+        var actorEntities: List<ActorEntity> = emptyList()
 )

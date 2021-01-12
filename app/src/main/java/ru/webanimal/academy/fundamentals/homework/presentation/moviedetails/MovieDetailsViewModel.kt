@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie
-import ru.webanimal.academy.fundamentals.homework.domain.movies.MoviesDataSource
+import ru.webanimal.academy.fundamentals.homework.domain.movies.MoviesInteractor
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Movie
 
-class MovieDetailsViewModel(private val dataSource: MoviesDataSource) : ViewModel() {
+class MovieDetailsViewModel(private val moviesInteractor: MoviesInteractor) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e(TAG, "ExceptionHandler throwable:$throwable")
@@ -22,7 +22,7 @@ class MovieDetailsViewModel(private val dataSource: MoviesDataSource) : ViewMode
 
     fun onViewCreated(movieId: Int) {
         viewModelScope.launch(coroutineExceptionHandler) {
-            innerMovie.value = dataSource.getMovieByIdAsync(movieId)
+            innerMovie.value = moviesInteractor.getMovieByIdAsync(movieId)
         }
     }
 

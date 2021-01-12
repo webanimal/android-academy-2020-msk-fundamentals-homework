@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie
-import ru.webanimal.academy.fundamentals.homework.domain.movies.MoviesDataSource
+import ru.webanimal.academy.fundamentals.homework.domain.movies.MoviesInteractor
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Movie
 
-class MoviesListViewModel(private val dataSource: MoviesDataSource) : ViewModel() {
+class MoviesListViewModel(private val moviesInteractor: MoviesInteractor) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e(TAG, "ExceptionHandler throwable:$throwable")
@@ -22,14 +22,14 @@ class MoviesListViewModel(private val dataSource: MoviesDataSource) : ViewModel(
 
     fun onViewCreated() {
         viewModelScope.launch(coroutineExceptionHandler) {
-            innerMovies.value = dataSource.getMoviesAsync(true)
+            innerMovies.value = moviesInteractor.getMoviesAsync(false)
         }
     }
 
     fun onFavoriteClick(movie: Movie) {
         viewModelScope.launch(coroutineExceptionHandler) {
-            dataSource.updateMovieAsync(movie)
-            innerMovies.value = dataSource.getMoviesAsync()
+            moviesInteractor.updateMovieAsync(movie)
+            innerMovies.value = moviesInteractor.getMoviesAsync()
         }
     }
 

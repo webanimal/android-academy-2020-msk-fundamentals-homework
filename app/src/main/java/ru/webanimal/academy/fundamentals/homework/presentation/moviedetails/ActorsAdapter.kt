@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ru.webanimal.academy.fundamentals.homework.R
-import ru.webanimal.academy.fundamentals.homework.data.models.Actor
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Actor
 
 class ActorsAdapter : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 

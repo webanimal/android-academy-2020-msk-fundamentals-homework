@@ -1,4 +1,4 @@
-package ru.webanimal.academy.fundamentals.homework.extensions
+package ru.webanimal.academy.fundamentals.homework.presentation.extensions
 
 import android.content.Context
 import android.util.TypedValue

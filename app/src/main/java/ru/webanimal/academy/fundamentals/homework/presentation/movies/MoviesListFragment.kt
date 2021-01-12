@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.*
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie
-import ru.webanimal.academy.fundamentals.homework.extensions.pxToDp
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Movie
+import ru.webanimal.academy.fundamentals.homework.presentation.core.BaseFragment
+import ru.webanimal.academy.fundamentals.homework.presentation.ItemOffsetDecorator
+import ru.webanimal.academy.fundamentals.homework.presentation.extensions.pxToDp
 
 class MoviesListFragment : BaseFragment() {
 
@@ -52,6 +54,12 @@ class MoviesListFragment : BaseFragment() {
 
         super.onDestroyView()
     }
+
+    override fun onDetach() {
+        listItemClickListener = null
+
+        super.onDetach()
+    }
     
     private fun updateAdapter(movies: List<Movie>) {
         (recycler?.adapter as? MoviesAdapter)?.updateAdapter(movies)
@@ -72,13 +80,15 @@ class MoviesListFragment : BaseFragment() {
     private fun setupViews(view: View) {
         recycler = view.findViewById<RecyclerView>(R.id.rvMovies).apply {
             layoutManager = GridLayoutManager(view.context, columnsValue)
-            addItemDecoration(ItemOffsetDecorator(
+            addItemDecoration(
+                ItemOffsetDecorator(
                 context.applicationContext,
                 left = ADAPTER_DECORATION_SPACE,
                 top = ADAPTER_DECORATION_SPACE,
                 right = ADAPTER_DECORATION_SPACE,
                 bottom = ADAPTER_DECORATION_SPACE
-            ))
+            )
+            )
             adapter = MoviesAdapter(
                 actualListItemWidth,
                 listItemClickListener,
@@ -93,8 +103,6 @@ class MoviesListFragment : BaseFragment() {
 
     private fun clearViews() {
         recycler = null
-
-        listItemClickListener = null
     }
 
     private fun setupViewModel() {

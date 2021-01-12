@@ -10,13 +10,13 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import ru.webanimal.academy.fundamentals.homework.BaseFragment
-import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
+import ru.webanimal.academy.fundamentals.homework.presentation.core.BaseFragment
+import ru.webanimal.academy.fundamentals.homework.presentation.ItemOffsetDecorator
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.appComponent
-import ru.webanimal.academy.fundamentals.homework.data.models.Actor
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie
-import ru.webanimal.academy.fundamentals.homework.extensions.visibleOrGone
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Actor
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Movie
+import ru.webanimal.academy.fundamentals.homework.presentation.extensions.visibleOrGone
 
 class MovieDetailsFragment : BaseFragment() {
 
@@ -70,6 +70,12 @@ class MovieDetailsFragment : BaseFragment() {
         clearViews()
 
         super.onDestroyView()
+    }
+
+    override fun onDetach() {
+        backClickListener = null
+
+        super.onDetach()
     }
 
     private fun updateActors(actors: List<Actor>) {
@@ -138,8 +144,6 @@ class MovieDetailsFragment : BaseFragment() {
         reviewsCounterView = null
         posterImage = null
         ratings = emptyList()
-
-        backClickListener = null
     }
 
     private fun updateActorsVisibility(setVisible: Boolean) {
