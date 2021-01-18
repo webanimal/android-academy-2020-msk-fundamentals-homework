@@ -29,7 +29,8 @@ android {
     productFlavors {
         prod {
             dimension "serverType"
-            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+            buildConfigField "String", "BASE_IMG_URL", "\"https://image.tmdb.org/t/p/w342/\""
         }
     }
 

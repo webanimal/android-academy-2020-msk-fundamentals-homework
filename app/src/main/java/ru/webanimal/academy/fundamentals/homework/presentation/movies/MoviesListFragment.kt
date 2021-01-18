@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.*
-import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Movie
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.ListMovie
 import ru.webanimal.academy.fundamentals.homework.presentation.core.BaseFragment
 import ru.webanimal.academy.fundamentals.homework.presentation.ItemOffsetDecorator
 import ru.webanimal.academy.fundamentals.homework.presentation.extensions.pxToDp
@@ -61,7 +61,7 @@ class MoviesListFragment : BaseFragment() {
         super.onDetach()
     }
     
-    private fun updateAdapter(movies: List<Movie>) {
+    private fun updateAdapter(movies: List<ListMovie>) {
         (recycler?.adapter as? MoviesAdapter)?.updateAdapter(movies)
     }
 
@@ -93,7 +93,7 @@ class MoviesListFragment : BaseFragment() {
                 actualListItemWidth,
                 listItemClickListener,
                 object : OnFavoriteClickListener {
-                    override fun onClick(movie: Movie) {
+                    override fun onClick(movie: ListMovie) {
                         viewModel.onFavoriteClick(movie)
                     }
                 }
@@ -119,7 +119,7 @@ class MoviesListFragment : BaseFragment() {
     }
     
     interface OnFavoriteClickListener {
-        fun onClick(movie: Movie)
+        fun onClick(movie: ListMovie)
     }
 
     companion object {

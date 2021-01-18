@@ -10,6 +10,9 @@ import com.squareup.picasso.Picasso
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Actor
 
+// TODO:
+//  add "character" name into layout.
+//  add "duration" into layout.
 class ActorsAdapter : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 
     private var actorsList = mutableListOf<Actor>()
@@ -44,7 +47,7 @@ class ActorsAdapter : RecyclerView.Adapter<ActorsAdapter.ActorsViewHolder>() {
 
         fun onBind(actor: Actor) {
             nameView?.text = actor.name
-            Picasso.get().load(actor.image)
+            Picasso.get().load(actor.imageUrl)
                 .placeholder(R.drawable.img_actor_placeholder)
                 .into(avatarImage)
         }

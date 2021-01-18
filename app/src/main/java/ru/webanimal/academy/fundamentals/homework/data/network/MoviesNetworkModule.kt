@@ -4,6 +4,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import ru.webanimal.academy.fundamentals.homework.data.network.apis.MoviesApi
 
@@ -15,6 +16,7 @@ class MoviesNetworkModule(baseUrl: String) : MoviesNetworkClient {
 
     private val moviesClient = OkHttpClient.Builder()
         .addInterceptor(MoviesApiQueryInterceptor(hashMapOf("api_key" to MOVIES_API_KEY)))
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         .build()
 
     private val moviesRetrofit = Retrofit.Builder()

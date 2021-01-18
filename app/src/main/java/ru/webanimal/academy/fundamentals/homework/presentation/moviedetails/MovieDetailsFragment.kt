@@ -15,9 +15,10 @@ import ru.webanimal.academy.fundamentals.homework.presentation.ItemOffsetDecorat
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.appComponent
 import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Actor
-import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Movie
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.DetailsMovie
 import ru.webanimal.academy.fundamentals.homework.presentation.extensions.visibleOrGone
 
+// TODO: add "duration" name into layout.
 class MovieDetailsFragment : BaseFragment() {
 
     private lateinit var viewModel: MovieDetailsViewModel
@@ -86,7 +87,7 @@ class MovieDetailsFragment : BaseFragment() {
         updateActorsVisibility(setVisible = isNotEmpty)
     }
 
-    private fun bindMovie(movie: Movie) {
+    private fun bindMovie(movie: DetailsMovie) {
         filmNameView?.text = movie.title
         genreView?.text = movie.genres
         storylineView?.text = movie.overview

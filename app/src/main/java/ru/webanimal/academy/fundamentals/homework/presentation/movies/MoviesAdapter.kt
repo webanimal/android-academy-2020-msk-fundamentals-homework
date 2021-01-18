@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ru.webanimal.academy.fundamentals.homework.R
-import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Movie
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.ListMovie
 import ru.webanimal.academy.fundamentals.homework.presentation.extensions.getString
 
 class MoviesAdapter(
@@ -19,7 +19,7 @@ class MoviesAdapter(
 ) : RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
 
     private val diffCallback = MoviesDiffCallback()
-    private var moviesList: List<Movie> = mutableListOf()
+    private var moviesList: List<ListMovie> = mutableListOf()
 
     override fun getItemViewType(position: Int): Int {
         return when {
@@ -76,7 +76,7 @@ class MoviesAdapter(
         return moviesList.size
     }
 
-    fun updateAdapter(newMovies: List<Movie>?) {
+    fun updateAdapter(newMovies: List<ListMovie>) {
         if (newMovies.isNullOrEmpty()) {
             return
         }
@@ -94,7 +94,7 @@ class MoviesAdapter(
         private val genreView: TextView = itemView.findViewById(R.id.tvMoviesListFilmGenre)
         private val allowedAgeView: TextView = itemView.findViewById(R.id.tvMoviesListAllowedAge)
         private val reviewsCounterView: TextView = itemView.findViewById(R.id.tvMoviesListReviewsCounter)
-        private val durationView: TextView = itemView.findViewById(R.id.tvMoviesListFilmDuration)
+        private val releaseDateView: TextView = itemView.findViewById(R.id.tvMoviesListFilmReleaseDate)
         private val headerImage: ImageView = itemView.findViewById(R.id.ivMoviesListHeaderImage)
         private val favoriteIcon: ImageView = itemView.findViewById(R.id.ivMoviesListIsFavorite)
         private val ratingImages = listOf<ImageView>(
@@ -106,7 +106,7 @@ class MoviesAdapter(
         )
 
         fun onBind(
-            movie: Movie,
+            movie: ListMovie,
             favoriteClickListener: MoviesListFragment.OnFavoriteClickListener
         ) {
             
@@ -114,7 +114,7 @@ class MoviesAdapter(
             genreView.text = movie.genres
             allowedAgeView.text = movie.allowedAge
             reviewsCounterView.text = movie.reviewsCounter.toString()
-            durationView.text = getString(R.string.movies_list_film_time, movie.duration.toString())
+            releaseDateView.text = movie.releaseDate
 
             Picasso.get().load(movie.posterList)
                 .placeholder(R.drawable.img_coming_soon_placeholder)

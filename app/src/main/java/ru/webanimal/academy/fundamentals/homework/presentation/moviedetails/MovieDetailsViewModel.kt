@@ -7,22 +7,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import ru.webanimal.academy.fundamentals.homework.domain.movies.MoviesInteractor
-import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Movie
+import ru.webanimal.academy.fundamentals.homework.domain.movies.MovieDetailsInteractor
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.DetailsMovie
 
-class MovieDetailsViewModel(private val moviesInteractor: MoviesInteractor) : ViewModel() {
+class MovieDetailsViewModel(private val moviesDetailsInteractor: MovieDetailsInteractor) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e(TAG, "ExceptionHandler throwable:$throwable")
     }
 
-    private val innerMovie = MutableLiveData<Movie>()
+    private val innerMovie = MutableLiveData<DetailsMovie>()
 
-    val movie: LiveData<Movie> get() = innerMovie
+    val movie: LiveData<DetailsMovie> get() = innerMovie
 
     fun onViewCreated(movieId: Int) {
         viewModelScope.launch(coroutineExceptionHandler) {
-            innerMovie.value = moviesInteractor.getMovieByIdAsync(movieId)
+            innerMovie.value = moviesDetailsInteractor.getMovieByIdAsync(movieId)
         }
     }
 

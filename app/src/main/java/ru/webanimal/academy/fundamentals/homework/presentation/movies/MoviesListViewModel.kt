@@ -7,29 +7,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import ru.webanimal.academy.fundamentals.homework.domain.movies.MoviesInteractor
-import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Movie
+import ru.webanimal.academy.fundamentals.homework.domain.movies.MoviesListInteractor
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.ListMovie
 
-class MoviesListViewModel(private val moviesInteractor: MoviesInteractor) : ViewModel() {
+class MoviesListViewModel(private val moviesListInteractor: MoviesListInteractor) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         Log.e(TAG, "ExceptionHandler throwable:$throwable")
     }
 
-    private val innerMovies = MutableLiveData<List<Movie>>(emptyList())
+    private val innerMovies = MutableLiveData<List<ListMovie>>(emptyList())
 
-    val movies: LiveData<List<Movie>> get() = innerMovies
+    val movies: LiveData<List<ListMovie>> get() = innerMovies
 
     fun onViewCreated() {
         viewModelScope.launch(coroutineExceptionHandler) {
-            innerMovies.value = moviesInteractor.getMoviesAsync(false)
+            innerMovies.value = moviesListInteractor.getMoviesAsync(false)
         }
     }
 
-    fun onFavoriteClick(movie: Movie) {
+    fun onFavoriteClick(movie: ListMovie) {
         viewModelScope.launch(coroutineExceptionHandler) {
-            moviesInteractor.updateMovieAsync(movie)
-            innerMovies.value = moviesInteractor.getMoviesAsync()
+//            moviesListInteractor.updateMovieAsync(movie)
+//            innerMovies.value = moviesListInteractor.getMoviesAsync()
         }
     }
 

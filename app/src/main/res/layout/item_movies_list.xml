@@ -158,14 +158,14 @@
         />
 
     <TextView
-        android:id="@+id/tvMoviesListFilmDuration"
+        android:id="@+id/tvMoviesListFilmReleaseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:gravity="center_vertical|start"
         android:textSize="@dimen/movies_list_film_time_size"
-        android:textColor="@color/colorMoviesListFilmTime"
-        android:text="@string/movies_list_film_time"
+        android:textColor="@color/colorMoviesListFilmReleaseDate"
+        android:text="@string/movies_list_film_release_date"
         app:layout_constraintTop_toBottomOf="@+id/tvMoviesListFilmName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
