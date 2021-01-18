@@ -12,8 +12,7 @@
     <string name="movies_list_rating_bar_description">Rating bar</string>
     <string name="movies_list_reviews_counter">125 Reviews</string>
     <string name="movies_list_film_name">Avengers: End Game</string>
-    <string name="movies_list_film_time">%s MIN</string>
-
+    <string name="movies_list_film_release_date">2016–06–02</string>
     <string name="movies_list_empty">There are no movies right now.</string>
     <!-- Movies list screen -->
 
@@ -25,6 +24,7 @@
     <string name="movie_details_allowed_age">13+</string>
     <string name="movie_details_film_name">Avengers:\nEnd Game</string>
     <string name="movie_details_film_genre">Action, Adventure, Fantasy</string>
+    <string name="movie_details_film_duration">%s MIN</string>
     <string name="movie_details_rating_bar_description">Rating bar</string>
     <string name="movie_details_reviews_counter">125 Reviews</string>
     <string name="movie_details_storyline_title">Storyline</string>

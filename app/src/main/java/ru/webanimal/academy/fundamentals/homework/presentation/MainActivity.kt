@@ -1,7 +1,8 @@
-package ru.webanimal.academy.fundamentals.homework
+package ru.webanimal.academy.fundamentals.homework.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.presentation.moviedetails.MovieDetailsFragment
 import ru.webanimal.academy.fundamentals.homework.presentation.movies.MoviesListFragment
 

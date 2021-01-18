@@ -10,14 +10,15 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import ru.webanimal.academy.fundamentals.homework.BaseFragment
-import ru.webanimal.academy.fundamentals.homework.ItemOffsetDecorator
+import ru.webanimal.academy.fundamentals.homework.presentation.core.BaseFragment
+import ru.webanimal.academy.fundamentals.homework.presentation.ItemOffsetDecorator
 import ru.webanimal.academy.fundamentals.homework.R
 import ru.webanimal.academy.fundamentals.homework.appComponent
-import ru.webanimal.academy.fundamentals.homework.data.models.Actor
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie
-import ru.webanimal.academy.fundamentals.homework.extensions.visibleOrGone
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.Actor
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.DetailsMovie
+import ru.webanimal.academy.fundamentals.homework.presentation.extensions.visibleOrGone
 
+// TODO: add "duration" name into layout.
 class MovieDetailsFragment : BaseFragment() {
 
     private lateinit var viewModel: MovieDetailsViewModel
@@ -52,13 +53,13 @@ class MovieDetailsFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
     }
 
-    override fun onViewCreated(parent: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(parent, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         movieId = extractMovieId(args = arguments, savedState = savedInstanceState)
 
-        setupViews(parent)
-        setupListeners(parent)
+        setupViews(view)
+        setupListeners(view)
         setupViewModel()
     }
 
@@ -66,8 +67,13 @@ class MovieDetailsFragment : BaseFragment() {
         outState.putInt(KEY_MOVIE_ID, movieId)
     }
 
-    override fun onDetach() {
+    override fun onDestroyView() {
         clearViews()
+
+        super.onDestroyView()
+    }
+
+    override fun onDetach() {
         backClickListener = null
 
         super.onDetach()
@@ -81,7 +87,7 @@ class MovieDetailsFragment : BaseFragment() {
         updateActorsVisibility(setVisible = isNotEmpty)
     }
 
-    private fun bindViews(movie: Movie) {
+    private fun bindMovie(movie: DetailsMovie) {
         filmNameView?.text = movie.title
         genreView?.text = movie.genres
         storylineView?.text = movie.overview
@@ -156,7 +162,7 @@ class MovieDetailsFragment : BaseFragment() {
         viewModel = ViewModelProvider(this, appComponent().viewModelFactory())
             .get(MovieDetailsViewModel::class.java)
         viewModel.movie.observe(this.viewLifecycleOwner) {
-            bindViews(it)
+            bindMovie(it)
             updateActors(it.actors)
         }
         if (movieId > 0) {

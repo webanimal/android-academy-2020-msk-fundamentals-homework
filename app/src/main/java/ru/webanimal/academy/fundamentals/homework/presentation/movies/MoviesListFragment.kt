@@ -9,8 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.webanimal.academy.fundamentals.homework.*
-import ru.webanimal.academy.fundamentals.homework.data.models.Movie
-import ru.webanimal.academy.fundamentals.homework.extensions.pxToDp
+import ru.webanimal.academy.fundamentals.homework.domain.movies.models.ListMovie
+import ru.webanimal.academy.fundamentals.homework.presentation.core.BaseFragment
+import ru.webanimal.academy.fundamentals.homework.presentation.ItemOffsetDecorator
+import ru.webanimal.academy.fundamentals.homework.presentation.extensions.pxToDp
 
 class MoviesListFragment : BaseFragment() {
 
@@ -47,14 +49,19 @@ class MoviesListFragment : BaseFragment() {
         setupViewModel()
     }
 
+    override fun onDestroyView() {
+        clearViews()
+
+        super.onDestroyView()
+    }
+
     override fun onDetach() {
-        recycler = null
         listItemClickListener = null
 
         super.onDetach()
     }
     
-    private fun updateAdapter(movies: List<Movie>) {
+    private fun updateAdapter(movies: List<ListMovie>) {
         (recycler?.adapter as? MoviesAdapter)?.updateAdapter(movies)
     }
 
@@ -73,23 +80,29 @@ class MoviesListFragment : BaseFragment() {
     private fun setupViews(view: View) {
         recycler = view.findViewById<RecyclerView>(R.id.rvMovies).apply {
             layoutManager = GridLayoutManager(view.context, columnsValue)
-            addItemDecoration(ItemOffsetDecorator(
+            addItemDecoration(
+                ItemOffsetDecorator(
                 context.applicationContext,
                 left = ADAPTER_DECORATION_SPACE,
                 top = ADAPTER_DECORATION_SPACE,
                 right = ADAPTER_DECORATION_SPACE,
                 bottom = ADAPTER_DECORATION_SPACE
-            ))
+            )
+            )
             adapter = MoviesAdapter(
                 actualListItemWidth,
                 listItemClickListener,
                 object : OnFavoriteClickListener {
-                    override fun onClick(movie: Movie) {
+                    override fun onClick(movie: ListMovie) {
                         viewModel.onFavoriteClick(movie)
                     }
                 }
             )
         }
+    }
+
+    private fun clearViews() {
+        recycler = null
     }
 
     private fun setupViewModel() {
@@ -106,7 +119,7 @@ class MoviesListFragment : BaseFragment() {
     }
     
     interface OnFavoriteClickListener {
-        fun onClick(movie: Movie)
+        fun onClick(movie: ListMovie)
     }
 
     companion object {

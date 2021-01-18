@@ -1,10 +1,10 @@
-package ru.webanimal.academy.fundamentals.homework
+package ru.webanimal.academy.fundamentals.homework.presentation
 
 import android.content.Context
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import ru.webanimal.academy.fundamentals.homework.extensions.dpToPx
+import ru.webanimal.academy.fundamentals.homework.presentation.extensions.dpToPx
 
 class ItemOffsetDecorator(
     private val appContext: Context,

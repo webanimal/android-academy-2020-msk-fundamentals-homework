@@ -13,6 +13,7 @@
     <color name="colorMoviesListReviewsCounter">@color/colorGrayText</color>
     <color name="colorMoviesListFilmName">@color/colorLightOnDarkText</color>
     <color name="colorMoviesListFilmTime">@color/colorGrayText</color>
+    <color name="colorMoviesListFilmReleaseDate">@color/colorGrayText</color>
     <!-- Movies List screen -->
 
     <!-- Movie Details screen -->

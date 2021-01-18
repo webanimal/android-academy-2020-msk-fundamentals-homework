@@ -18,7 +18,7 @@
         >
 
         <activity
-            android:name=".MainActivity"
+            android:name=".presentation.MainActivity"
             android:label="@string/movies_list_title"
             >
 
